@@ -55,19 +55,10 @@ const ChatTab = () => {
     setIsLoading(true);
 
     try {
-      const apiKey = "AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI";
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are a professional financial advisor AI assistant. The user asks: "${currentInput}". Please provide helpful, accurate financial advice. Keep responses concise and practical. Do not use asterisks or markdown formatting in your response.`
-            }]
-          }]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: currentInput })
       });
 
       if (!response.ok) {

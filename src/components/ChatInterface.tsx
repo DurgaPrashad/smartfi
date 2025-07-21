@@ -44,21 +44,53 @@ const ChatInterface = () => {
     "Can I afford a new car loan?"
   ];
 
-  const generateAIResponse = async (userMessage: string): Promise<string> => {
+  // Add a utility to detect financial queries and trigger MCP calls
+  const detectAndFetchFinancialData = async (userMessage: string) => {
+    const msg = userMessage.toLowerCase();
     try {
-      const apiKey = "AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI";
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      if (msg.includes('net worth')) {
+        const res = await fetch('/sample_responses/fetch_net_worth.json');
+        const data = await res.json();
+        if (data?.netWorthResponse?.totalNetWorthValue?.units) {
+          return `Your total net worth is ₹${data.netWorthResponse.totalNetWorthValue.units}, with major assets in savings accounts and mutual funds.`;
+        }
+      } else if (msg.includes('epf')) {
+        const res = await fetch('/sample_responses/fetch_epf_details.json');
+        const data = await res.json();
+        if (data?.uanAccounts?.[0]?.rawDetails?.overall_pf_balance?.current_pf_balance) {
+          return `Your current EPF balance is ₹${data.uanAccounts[0].rawDetails.overall_pf_balance.current_pf_balance}.`;
+        }
+      } else if (msg.includes('mutual fund') || msg.includes('mf') || msg.includes('xirr')) {
+        const res = await fetch('/sample_responses/fetch_mf_transactions.json');
+        const data = await res.json();
+        if (data?.transactions?.length) {
+          return `You have ${data.transactions.length} mutual fund transactions. For XIRR and performance, ask for a specific scheme or see your dashboard.`;
+        }
+      } else if (msg.includes('credit score') || msg.includes('credit report')) {
+        const res = await fetch('/sample_responses/fetch_credit_report.json');
+        const data = await res.json();
+        if (data?.creditReports?.[0]?.creditReportData?.score?.bureauScore) {
+          return `Your current credit score is ${data.creditReports[0].creditReportData.score.bureauScore}.`;
+        }
+      }
+    } catch (e) {
+      console.error('Sample response fetch error:', e);
+    }
+    return null;
+  };
+
+  const generateAIResponse = async (userMessage: string): Promise<string> => {
+    // First, try to detect and fetch financial data from MCP
+    const mcpSummary = await detectAndFetchFinancialData(userMessage);
+    if (mcpSummary) {
+      // Optionally, you could send this to Gemini for further summarization
+      return mcpSummary;
+    }
+    try {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are a professional financial advisor AI assistant. The user asks: "${userMessage}". Please provide helpful, accurate financial advice focusing on practical investment strategies, portfolio optimization, retirement planning, and tax savings. Keep responses concise and actionable. Do not use asterisks or markdown formatting in your response.`
-            }]
-          }]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
       });
 
       if (!response.ok) {

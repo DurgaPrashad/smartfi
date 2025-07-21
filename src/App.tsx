@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster";
@@ -14,6 +14,7 @@ import GoalsPage from '@/pages/GoalsPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import PaymentPage from '@/pages/PaymentPage';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import ChatInterface from '@/components/ChatInterface';
 import './App.css';
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 function AppContent() {
+  const [showChat, setShowChat] = useState(false);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
       <Navbar />
@@ -93,6 +95,59 @@ function AppContent() {
         </Routes>
       </main>
       <Toaster />
+      {/* Floating AI Chat Agent */}
+      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 50 }}>
+        {showChat && (
+          <div style={{
+            width: '100vw',
+            maxWidth: 400,
+            height: '70vh',
+            maxHeight: 600,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            borderRadius: 16,
+            overflow: 'hidden',
+            background: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', background: 'rgba(16, 185, 129, 0.1)', padding: 8 }}>
+              <button
+                aria-label="Close chat"
+                onClick={() => setShowChat(false)}
+                style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#2563eb' }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+              <ChatInterface />
+            </div>
+          </div>
+        )}
+        {!showChat && (
+          <button
+            aria-label="Open SmartFi AI Chat"
+            onClick={() => setShowChat(true)}
+            style={{
+              background: 'linear-gradient(90deg, #10b981 0%, #2563eb 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '50%',
+              width: 56,
+              height: 56,
+              boxShadow: '0 4px 16px rgba(16,185,129,0.18)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 28,
+              cursor: 'pointer',
+              zIndex: 51,
+            }}
+          >
+            💬
+          </button>
+        )}
+      </div>
     </div>
   );
 }
