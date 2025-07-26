@@ -62,7 +62,7 @@ Set these in Railway dashboard or via CLI:
 railway variables set VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
 
 # Optional (for AI features)
-railway variables set VITE_GEMINI_API_KEY=AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI
+railway variables set VITE_GEMINI_API_KEY=your_gemini_api_key_here
 
 # System variables (automatically set by Railway)
 railway variables set PORT=8080

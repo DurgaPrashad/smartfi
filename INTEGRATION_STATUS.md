@@ -44,7 +44,7 @@ railway up
 
 # Environment Variables to set:
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
-VITE_GEMINI_API_KEY=AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 #### **Option 2: Vercel Deployment** 
@@ -54,7 +54,7 @@ vercel --prod
 
 # Environment Variables to set in Vercel dashboard:
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
-VITE_GEMINI_API_KEY=AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### 🎨 **User Experience Flow**

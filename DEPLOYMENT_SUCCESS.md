@@ -94,7 +94,7 @@ curl https://your-domain.vercel.app/health.json
 ### **Environment Variables (Set in Vercel):**
 ```bash
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
-VITE_GEMINI_API_KEY=AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ## 🎊 **Ready for Production**
