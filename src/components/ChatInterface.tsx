@@ -3,8 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Send, Bot, User, Sparkles, TrendingUp, PieChart, Target, DollarSign } from 'lucide-react';
+import { Send, Bot, User, Sparkles, TrendingUp, PieChart, Target, DollarSign, Database } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useFiMCP } from '@/contexts/FiMCPContext';
 
 interface Message {
   id: string;
@@ -14,11 +15,12 @@ interface Message {
 }
 
 const ChatInterface = () => {
+  const { data, analyzeFinancialData, isDemoMode, demoPhoneNumber } = useFiMCP();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       type: 'ai',
-      content: "Hello! I'm your SmartFi AI assistant powered by Google's Gemini. I can help you with financial planning, investment analysis, goal tracking, and personalized recommendations. Try asking me about your portfolio performance or financial goals!",
+      content: `Hello! I'm your SmartFi AI assistant powered by Google's Gemini and Fi MCP data. ${isDemoMode ? `I have access to your ${demoPhoneNumber} demo financial data.` : 'Connect your financial accounts to get personalized insights.'} Ask me about your net worth, investments, credit score, or financial planning!`,
       timestamp: new Date()
     }
   ]);
@@ -36,92 +38,13 @@ const ChatInterface = () => {
   }, [messages]);
 
   const suggestedQueries = [
-    "How can I optimize my investment portfolio?",
-    "When will I reach my retirement goal?", 
-    "Should I pay off my home loan early?",
-    "Which SIPs are underperforming?",
-    "How much should I invest monthly?",
-    "Can I afford a new car loan?"
+    "What's my current net worth?",
+    "Analyze my mutual fund portfolio performance",
+    "How is my credit score and what can I improve?",
+    "Review my monthly spending patterns",
+    "What's my EPF balance and retirement planning?",
+    "Provide comprehensive financial analysis"
   ];
-
-  // Add a utility to detect financial queries and trigger MCP calls
-  const detectAndFetchFinancialData = async (userMessage: string) => {
-    const msg = userMessage.toLowerCase();
-    try {
-      if (msg.includes('net worth')) {
-        const res = await fetch('/sample_responses/fetch_net_worth.json');
-        const data = await res.json();
-        if (data?.netWorthResponse?.totalNetWorthValue?.units) {
-          return `Your total net worth is ₹${data.netWorthResponse.totalNetWorthValue.units}, with major assets in savings accounts and mutual funds.`;
-        }
-      } else if (msg.includes('epf')) {
-        const res = await fetch('/sample_responses/fetch_epf_details.json');
-        const data = await res.json();
-        if (data?.uanAccounts?.[0]?.rawDetails?.overall_pf_balance?.current_pf_balance) {
-          return `Your current EPF balance is ₹${data.uanAccounts[0].rawDetails.overall_pf_balance.current_pf_balance}.`;
-        }
-      } else if (msg.includes('mutual fund') || msg.includes('mf') || msg.includes('xirr')) {
-        const res = await fetch('/sample_responses/fetch_mf_transactions.json');
-        const data = await res.json();
-        if (data?.transactions?.length) {
-          return `You have ${data.transactions.length} mutual fund transactions. For XIRR and performance, ask for a specific scheme or see your dashboard.`;
-        }
-      } else if (msg.includes('credit score') || msg.includes('credit report')) {
-        const res = await fetch('/sample_responses/fetch_credit_report.json');
-        const data = await res.json();
-        if (data?.creditReports?.[0]?.creditReportData?.score?.bureauScore) {
-          return `Your current credit score is ${data.creditReports[0].creditReportData.score.bureauScore}.`;
-        }
-      }
-    } catch (e) {
-      console.error('Sample response fetch error:', e);
-    }
-    return null;
-  };
-
-  const generateAIResponse = async (userMessage: string): Promise<string> => {
-    // First, try to detect and fetch financial data from MCP
-    const mcpSummary = await detectAndFetchFinancialData(userMessage);
-    if (mcpSummary) {
-      // Optionally, you could send this to Gemini for further summarization
-      return mcpSummary;
-    }
-    try {
-      const response = await fetch('/api/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get AI response');
-      }
-
-      const data = await response.json();
-      const aiResponseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I apologize, but I couldn't generate a response at this time. Please try again.";
-      
-      return aiResponseText.replace(/\*/g, ''); // Remove any asterisks
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      return getLocalFallbackResponse(userMessage);
-    }
-  };
-
-  const getLocalFallbackResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    if (lowerMessage.includes('portfolio') || lowerMessage.includes('investment')) {
-      return "Based on your current portfolio analysis, your equity allocation looks good at 54.8%. Your mutual funds show strong performance with 13.3% returns in Axis Bluechip. Consider rebalancing by increasing small-cap exposure to 15-20%. Your HDFC Midcap fund at 6% returns is underperforming - consider switching to Parag Parikh Flexi Cap Fund for better diversification.";
-    } else if (lowerMessage.includes('retirement') || lowerMessage.includes('retire')) {
-      return "With your current investment rate of ₹15K per month at 12% annual returns, you can accumulate ₹9.8 Crores in 32 years. To reach ₹10 Crores, increase monthly investment to ₹16K or continue current rate for 1 additional year. Consider increasing SIPs by 10% annually and adding NPS for extra tax benefits.";
-    } else if (lowerMessage.includes('loan') || lowerMessage.includes('debt')) {
-      return "Priority should be clearing credit card debt at 18-24% interest first. Your home loan at 8.5% can continue for tax benefits. Your EMI-to-income ratio at 25% is healthy, allowing for additional loans if needed. Instead of prepaying home loan, invest extra amount in equity for higher returns.";
-    } else if (lowerMessage.includes('sip') || lowerMessage.includes('underperform')) {
-      return "Your HDFC Midcap Fund is underperforming at 6.0% returns versus market benchmark of 12.1%. Consider stopping this SIP and redirecting funds to Motilal Oswal Midcap 30 Fund or increasing allocation to your top performers like SBI Small Cap Fund (15.0% returns) and Axis Bluechip Fund (13.3% returns).";
-    } else {
-      return "Thank you for your question! I can help you with investment portfolio optimization, SIP performance analysis, goal planning and tracking, debt management strategies, retirement planning, and tax-saving recommendations. Feel free to ask specific questions about your finances for personalized advice.";
-    }
-  };
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
@@ -129,47 +52,49 @@ const ChatInterface = () => {
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
-      content: inputValue,
+      content: inputValue.trim(),
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
-    const currentInput = inputValue;
     setInputValue('');
     setIsLoading(true);
 
     try {
-      const aiResponse = await generateAIResponse(currentInput);
+      // Get AI financial analysis using Gemini + Fi MCP data
+      const analysis = await analyzeFinancialData(userMessage.content);
       
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
-        content: aiResponse,
+        content: analysis,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, aiMessage]);
-      
-      toast({
-        title: "AI Response Generated",
-        description: "Your financial insight is ready!",
-      });
-      
     } catch (error) {
-      console.error('Error generating response:', error);
+      console.error('Error getting financial analysis:', error);
       
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
-        content: "I apologize, but I'm having trouble processing your request right now. Let me provide you with some general financial guidance based on your query.",
+        content: 'I apologize, but I encountered an error while analyzing your financial data. Please ensure you\'re connected to Fi MCP and try again. If the issue persists, try asking a more specific question about your finances.',
         timestamp: new Date()
       };
-      
+
       setMessages(prev => [...prev, errorMessage]);
+      
+      toast({
+        title: "Analysis Error",
+        description: "Failed to analyze financial data. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
   };
+
+
 
   const handleSuggestedQuery = (query: string) => {
     setInputValue(query);

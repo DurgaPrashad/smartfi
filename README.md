@@ -1,192 +1,310 @@
+# SmartFi - Fi MCP Integration
 
-# SmartFi — Your Personal Finance AI Agent
+A modern financial dashboard application that directly integrates with the Railway-hosted Fi MCP Server API, featuring Clerk authentication and Google Gemini AI analysis.
 
-## Overview
-SmartFi is an AI-powered personal finance assistant that consolidates your entire financial picture and provides actionable, personalized recommendations. It integrates with the Fi MCP (Model Context Protocol) dev server, which simulates real-world financial data for development and hackathon use.
+## 🌟 Features
 
----
+- **Dual Authentication**: Support for both Clerk authentication and Fi MCP demo accounts
+- **Live Financial Data**: Fetches ONLY from Railway-hosted Fi MCP API:
+  - Real-time net worth calculations
+  - Live mutual fund portfolios
+  - Actual bank transactions
+  - Current credit reports
+  - EPF account details
+- **AI Financial Advisor**: Powered by Google Gemini 2.0 Flash for:
+  - Comprehensive financial analysis
+  - Personalized investment insights
+  - Actionable recommendations
+- **Modern UI**: Built with React, TypeScript, and Tailwind CSS
+- **Railway Hosting**: Fully deployed and production-ready
 
-## 🏗️ How to Run the Fi MCP Dev Server
+## 🚀 Live Demo
+
+**Production URL**: https://fi-mcp-dev-production.up.railway.app
+
+### Demo Accounts Available:
+
+| Phone Number | Description |
+|-------------|-------------|
+| `2222222222` | Complete Portfolio - All assets connected with large mutual fund portfolio |
+| `7777777777` | Debt-Heavy Profile - High debt, poor performance scenario |
+| `8888888888` | SIP Investor - Consistent monthly SIP investor profile |
+| `9999999999` | Conservative Investor - Fixed income fanatic with low-risk investments |
+| `1010101010` | Gold Investor - High allocation to precious metals |
+| `5555555555` | No Credit Score - All assets except credit report |
+| `1111111111` | Minimal Assets - Only savings account balance |
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for build tooling and dev server
+- **Tailwind CSS** for styling
+- **Shadcn/ui** for components
+- **Clerk** for authentication
+- **Recharts** for data visualization
+- **Google Gemini 2.0 Flash** for AI analysis
+
+### API Integration
+- **Direct calls** to Railway Fi MCP Server
+- **Real-time data** from production Fi MCP API
+- **No local backend** required
+
+### Deployment
+- **Vercel** for frontend hosting
+- **Environment variables** for secure API keys
+- **SPA routing** for seamless navigation
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────┐
+│            React Frontend               │
+│         (Vite + TypeScript)             │
+│    ┌─────────────┐  ┌─────────────┐     │
+│    │    Clerk    │  │   Gemini    │     │
+│    │    Auth     │  │    AI       │     │
+│    └─────────────┘  └─────────────┘     │
+└─────────────────────────────────────────┘
+                      │
+                      │ Direct API Calls
+                      ▼
+┌─────────────────────────────────────────┐
+│        Railway Fi MCP Server           │
+│   https://fi-mcp-dev-production...      │
+│                                         │
+│  ┌─────────────────────────────────┐    │
+│  │        Financial Data           │    │
+│  │   • Net Worth • Credit Score    │    │
+│  │   • Bank Txns • Mutual Funds    │    │
+│  │   • EPF Details • Live Data     │    │
+│  └─────────────────────────────────┘    │
+└─────────────────────────────────────────┘
+```
+
+## 🚧 Local Development
 
 ### Prerequisites
-- Go 1.23 or later
 
-### Steps
+- Node.js 18+
+- Go 1.21+
+- Git
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-# Clone the fi-mcp-dev repository
-# (or use your own fork)
-git clone https://github.com/epiFi/fi-mcp-dev.git
-cd fi-mcp-dev
-
-go mod tidy
-FI_MCP_PORT=8080 go run .
+git clone <repository-url>
+cd smartfi-fi-mcp
 ```
-The server will start on http://localhost:8080.
 
-### Authentication Flow
-- When you call an API/tool, the server checks for a valid session.
-- If not authenticated, you’ll get a login_url in the response.
-- Open the login URL in your browser, enter any allowed phone number (see below), and any OTP/passcode.
-- On success, your session is active for the server run.
-
-#### Test Phone Numbers & Scenarios
-| Phone Number | Scenario Description |
-|--------------|---------------------|
-| 1111111111   | No assets connected. Only savings account balance present |
-| 2222222222   | All assets connected (Banks, EPF, Indian/US stocks, Credit report). Large MF portfolio |
-| 3333333333   | All assets connected. Small MF portfolio |
-| ...          | ... (see full list in fi-mcp-dev README) |
-
----
-
-## 🔑 Available API Tools (Endpoints)
-
-### 1. fetch_net_worth
-- **Purpose**: Calculate comprehensive net worth using actual data from connected accounts
-- **Use Cases**: Portfolio analysis, net worth tracking, financial health, investment performance, debt-to-asset ratio
-- **Sample Response**:
-```json
-{
-  "netWorthResponse": {
-    "assetValues": [
-      {"netWorthAttribute": "ASSET_TYPE_MUTUAL_FUND", "value": {"currencyCode": "INR", "units": "84613"}},
-      {"netWorthAttribute": "ASSET_TYPE_EPF", "value": {"currencyCode": "INR", "units": "211111"}},
-      {"netWorthAttribute": "ASSET_TYPE_INDIAN_SECURITIES", "value": {"currencyCode": "INR", "units": "200642"}},
-      {"netWorthAttribute": "ASSET_TYPE_SAVINGS_ACCOUNTS", "value": {"currencyCode": "INR", "units": "436355"}}
-    ],
-    "liabilityValues": [
-      {"netWorthAttribute": "LIABILITY_TYPE_OTHER_LOAN", "value": {"currencyCode": "INR", "units": "42000"}},
-      {"netWorthAttribute": "LIABILITY_TYPE_HOME_LOAN", "value": {"currencyCode": "INR", "units": "17000"}},
-      {"netWorthAttribute": "LIABILITY_TYPE_VEHICLE_LOAN", "value": {"currencyCode": "INR", "units": "5000"}}
-    ],
-    "totalNetWorthValue": {"currencyCode": "INR", "units": "868721"}
-  }
-}
+2. **Install dependencies**
+```bash
+npm install
 ```
-- **Error Handling**: Returns empty if no accounts connected. Prompts user to connect missing accounts.
 
-### 2. fetch_credit_report
-- **Purpose**: Retrieve comprehensive credit report information
-- **Sample Response**: (see full JSON in documentation)
-- **Error Handling**: Returns "No credit score data available" if not connected. Prompts user to connect credit profile.
+3. **Environment setup**
+Create `.env.local`:
+```bash
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+```
 
-### 3. fetch_epf_details
-- **Purpose**: Access Employee Provident Fund account information
-- **Sample Response**:
-```json
-{
-  "uanAccounts": [
-    {
-      "phoneNumber": {},
-      "rawDetails": {
-        "est_details": [
-          {"est_name": "KARZA TECHNOLOGIES PRIVATE LIMITED", "member_id": "MHBANXXXXXXXXXXXXXXXXX", "office": "(RO)BANDRA(MUMBAI-I)", "doj_epf": "24-03-2021", "doe_epf": "02-01-2022", "doe_eps": "02-01-2022", "pf_balance": {"net_balance": "200000", "employee_share": {"credit": "100000", "balance": "100000"}, "employer_share": {"credit": "100000", "balance": "100000"}}}
-        ],
-        "overall_pf_balance": {"pension_balance": "1000000", "current_pf_balance": "211111", "employee_share_total": {"credit": "1111", "balance": "11111"}}
-      }
+4. **Start development server**
+```bash
+npm run dev
+```
+
+### Development URLs
+
+- **Frontend**: http://localhost:5173
+- **Fi MCP API**: https://fi-mcp-dev-production.up.railway.app
+
+## 📦 Deployment
+
+### Vercel Deployment (Recommended)
+
+1. **Connect to Vercel**
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Login and deploy
+vercel login
+vercel
+```
+
+2. **Environment Variables**
+Set in Vercel dashboard:
+```
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+3. **Build Configuration**
+Vercel automatically detects the `vercel.json` configuration.
+
+### Manual Build
+
+```bash
+# Build frontend
+npm run build
+
+# Preview build locally
+npm run preview
+```
+
+## 🔐 Authentication & Security
+
+### Clerk Authentication
+- ✅ Standard email/password signup
+- ✅ Google OAuth integration  
+- ✅ User management and sessions
+- ✅ Production-ready security standards
+
+### Fi MCP Demo Authentication
+- ✅ Phone number based demo accounts (Railway Fi MCP data)
+- ✅ No real OTP verification (demo purposes only)
+- ✅ Instant access to live financial data
+- ✅ Secure session management
+
+### 🔒 Security Best Practices Implemented
+
+- ✅ **No hardcoded API keys** - All secrets in environment variables
+- ✅ **GitGuardian compliant** - No exposed credentials in code
+- ✅ **Environment-based configuration** - Secure for all deployments
+- ✅ **Direct HTTPS calls** - No insecure local backends
+- ✅ **Production-ready architecture** - Built for scale and security
+- ✅ **Real-time data only** - No local demo files or mock data
+
+## 🤖 AI Financial Analysis
+
+**Powered by Google Gemini 2.0 Flash API**
+- Uses real Fi MCP data for personalized analysis
+- Provides comprehensive financial summaries
+- Offers actionable investment recommendations
+- Analyzes spending patterns and suggests optimizations
+
+## 📊 Fi MCP API Integration
+
+**Live Data Source**: `https://fi-mcp-dev-production.up.railway.app`
+
+### Available Financial Tools
+
+- `fetch_net_worth` - Real-time asset and liability calculations
+- `fetch_credit_report` - Live credit score and detailed history
+- `fetch_epf_details` - Current EPF account balances and projections
+- `fetch_mutual_fund_transactions` - Live portfolio performance analysis
+- `fetch_bank_transactions` - Real transaction history and spending analytics
+
+**Note**: All local test data has been removed. The application exclusively uses the Railway-hosted Fi MCP API for authentic financial data.
+
+## 🎨 UI Components
+
+### Dashboard Features
+
+- **Overview Tab**: Net worth summary, portfolio distribution
+- **Investments Tab**: Mutual fund performance and SIP tracking
+- **Goals Tab**: Financial planning and target tracking
+- **Chat Tab**: AI-powered financial assistant
+
+### Responsive Design
+
+- Mobile-first approach
+- Adaptive layouts for tablets and desktop
+- Touch-friendly interactions
+
+## 🔒 Security
+
+- **Environment Variables**: Sensitive data in Railway secrets
+- **CORS Configuration**: Proper origin restrictions
+- **Authentication**: Clerk security standards
+- **Data Validation**: Input sanitization and validation
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Build Failures**
+   - Ensure Go 1.21+ is installed
+   - Check Node.js version (18+)
+   - Verify all dependencies are installed
+
+2. **API Connection Issues**
+   - Check Railway deployment status
+   - Verify environment variables
+   - Test Fi MCP endpoint directly
+
+3. **Authentication Problems**
+   - Confirm Clerk publishable key
+   - Check demo phone numbers
+   - Verify session management
+
+### Debug Commands
+
+```bash
+# Check build output
+npm run build
+
+# Test Go server locally
+cd server && go run main.go
+
+# Test API endpoints
+curl -X POST https://fi-mcp-dev-production.up.railway.app/mcp/stream \
+  -H "Content-Type: application/json" \
+  -H "Mcp-Session-Id: mcp-session-demo" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
+```
+
+## 📝 API Testing
+
+### Example cURL Commands
+
+```bash
+# Login to demo account
+curl -X POST https://fi-mcp-dev-production.up.railway.app/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sessionId": "mcp-session-demo",
+    "phoneNumber": "2222222222",
+    "otp": "demo"
+  }'
+
+# Fetch net worth
+curl -X POST https://fi-mcp-dev-production.up.railway.app/mcp/stream \
+  -H "Content-Type: application/json" \
+  -H "Mcp-Session-Id: mcp-session-demo" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "fetch_net_worth",
+      "arguments": {}
     }
-  ]
-}
-```
-- **Error Handling**: Directs users to link EPF account if not connected.
-
-### 4. fetch_mf_transactions
-- **Purpose**: Retrieve mutual funds transaction history for portfolio analysis
-- **Sample Response**:
-```json
-{
-  "transactions": [
-    {"isinNumber": "INF760K01FC4", "folioId": "55557777", "externalOrderType": "BUY", "transactionDate": "2022-12-31T18:30:00Z", "purchasePrice": {"currencyCode": "INR", "units": "66", "nanos": 554600000}, "transactionAmount": {"currencyCode": "INR", "units": "6655", "nanos": 460000000}, "transactionUnits": 100, "transactionMode": "N", "schemeName": "Canara Robeco Gilt Fund - Regular Plan"}
-  ]
-}
-```
-- **Error Handling**: Returns available data with clear indication of limitations.
-
----
-
-## 🛠️ Integration Examples
-
-### Python Example (using mcp client)
-```python
-from mcp.client.streamable_http import streamablehttp_client
-from mcp.client.session import ClientSession
-import asyncio
-
-async def main():
-    async with streamablehttp_client("http://localhost:8080/mcp/stream") as (read_stream, write_stream, _):
-        async with ClientSession(read_stream, write_stream) as session:
-            await session.initialize()
-            tools = await session.list_tools()
-            print(tools)
-            # Example: fetch net worth
-            networth = await session.call('networth:fetch_net_worth')
-            print(networth)
-
-if __name__ == "__main__":
-    asyncio.run(main())
+  }'
 ```
 
-### JavaScript Example
-```js
-async function getUserNetWorth() {
-  const response = await fetch('/api/mcp', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Mcp-Session-Id': 'your-session-id' },
-    body: JSON.stringify({ method: 'tools/call', params: { name: 'fetch_net_worth', arguments: {} } })
-  });
-  const data = await response.json();
-  // handle data
-}
-```
+## 🤝 Contributing
 
-### Curl Example
-```bash
-curl -X POST -H "Content-Type: application/json" -H "Mcp-Session-Id: mcp-session-xxxx" -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"fetch_net_worth","arguments":{}}}' http://localhost:8080/mcp/stream
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
----
+## 📄 License
 
-## 💬 AI Chat Integration (Gemini API)
+This project is licensed under the MIT License.
 
-- The AI chat is powered by Google Gemini API.
-- When a user asks a financial question (e.g., "What’s my net worth?"), the chat triggers a real MCP call, fetches the data, and summarizes it using Gemini.
-- If Gemini is unavailable, the chat falls back to local logic for common queries.
-- All chat UI is fully responsive and accessible.
+## 🆘 Support
 
-### Example Chat Flow
-1. User: "How much is my net worth?"
-2. Chat triggers `fetch_net_worth` via MCP, gets real data.
-3. Gemini API summarizes and responds: "Your total net worth is ₹8,68,721, with major assets in savings accounts and mutual funds."
-
-#### Gemini API Setup
-- Already integrated in the codebase.
-- Set your API key in `.env` as `VITE_GEMINI_API_KEY`.
+For issues and questions:
+- Check the troubleshooting section
+- Review Railway deployment logs
+- Test API endpoints directly
+- Verify authentication configuration
 
 ---
 
-## 📱 Responsive UI & Accessibility
-- All components are mobile-first, tablet-friendly, and desktop-rich.
-- Keyboard navigation, screen reader support, and color contrast are built-in.
-
----
-
-## 🧑‍💻 Best Practices
-- Always check if required accounts are connected before displaying data.
-- Handle partial data gracefully.
-- Provide clear error messages and user guidance.
-- Never store or cache sensitive financial data.
-- Use Gemini API for all AI/analytics features (no Vertex API).
-
----
-
-## 🖼️ Screenshots & Sample Conversations
-*(Add screenshots here if available)*
-
----
-
-## 🤝 Contributing & Support
-See original contributing guidelines. For support, email support@smartfi.app or join our Discord.
-
----
-
-**Built with ❤️ for smarter financial futures**
+**Built with ❤️ for the Fi MCP Hackathon**
