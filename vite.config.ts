@@ -8,6 +8,20 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      '/mcp': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+      '/mockWebPage': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+      '/login': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      }
+    }
   },
   plugins: [
     react(),
@@ -18,5 +32,8 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    outDir: 'dist',
   },
 }));

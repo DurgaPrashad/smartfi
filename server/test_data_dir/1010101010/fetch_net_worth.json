@@ -1,0 +1,62 @@
+{
+  "netWorthResponse": {
+    "assetValues": [
+      {
+        "netWorthAttribute": "ASSET_TYPE_MUTUAL_FUND",
+        "value": {
+          "currencyCode": "INR",
+          "units": "846420"
+        }
+      },
+      {
+        "netWorthAttribute": "ASSET_TYPE_EPF",
+        "value": {
+          "currencyCode": "INR",
+          "units": "211111"
+        }
+      },
+      {
+        "netWorthAttribute": "ASSET_TYPE_BANK_SAVINGS",
+        "value": {
+          "currencyCode": "INR",
+          "units": "125000"
+        }
+      },
+      {
+        "netWorthAttribute": "ASSET_TYPE_STOCKS_INDIAN",
+        "value": {
+          "currencyCode": "INR",
+          "units": "342500"
+        }
+      },
+      {
+        "netWorthAttribute": "ASSET_TYPE_STOCKS_US",
+        "value": {
+          "currencyCode": "USD",
+          "units": "4200"
+        }
+      }
+    ],
+    "liabilityValues": [
+      {
+        "netWorthAttribute": "LIABILITY_TYPE_CREDIT_CARD",
+        "value": {
+          "currencyCode": "INR",
+          "units": "25000"
+        }
+      },
+      {
+        "netWorthAttribute": "LIABILITY_TYPE_VEHICLE_LOAN",
+        "value": {
+          "currencyCode": "INR",
+          "units": "150000"
+        }
+      }
+    ],
+    "totalNetWorthValue": {
+      "currencyCode": "INR",
+      "units": "1458305"
+    },
+    "lastUpdated": "2024-01-15T10:30:00Z"
+  }
+}

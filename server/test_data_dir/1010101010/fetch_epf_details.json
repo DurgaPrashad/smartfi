@@ -1,0 +1,60 @@
+{
+  "epfDetails": {
+    "summary": {
+      "totalBalance": 211111,
+      "employeeContribution": 126666,
+      "employerContribution": 84445,
+      "lastContributionDate": "2024-01-05",
+      "accountStatus": "Active"
+    },
+    "accounts": [
+      {
+        "uanNumber": "101234567890",
+        "pfNumber": "KN/BLR/12345/000123",
+        "companyName": "Tech Solutions Pvt Ltd",
+        "employeeBalance": 126666,
+        "employerBalance": 84445,
+        "totalBalance": 211111,
+        "lastSalary": 85000,
+        "employeeContributionRate": 12,
+        "employerContributionRate": 8,
+        "accountStartDate": "2020-03-15",
+        "lastContributionDate": "2024-01-05",
+        "status": "Active"
+      }
+    ],
+    "contributions": [
+      {
+        "month": "January 2024",
+        "salary": 85000,
+        "employeeContribution": 10200,
+        "employerContribution": 6800,
+        "totalContribution": 17000,
+        "contributionDate": "2024-01-05"
+      },
+      {
+        "month": "December 2023",
+        "salary": 85000,
+        "employeeContribution": 10200,
+        "employerContribution": 6800,
+        "totalContribution": 17000,
+        "contributionDate": "2023-12-05"
+      },
+      {
+        "month": "November 2023",
+        "salary": 85000,
+        "employeeContribution": 10200,
+        "employerContribution": 6800,
+        "totalContribution": 17000,
+        "contributionDate": "2023-11-05"
+      }
+    ],
+    "projectedRetirement": {
+      "retirementAge": 58,
+      "yearsToRetirement": 25,
+      "projectedBalance": 1850000,
+      "monthlyPension": 15420
+    },
+    "lastUpdated": "2024-01-15T10:00:00Z"
+  }
+}

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useUser } from '@clerk/clerk-react';
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from '@/components/layout/Navbar';
 import HomePage from '@/pages/HomePage';
@@ -14,6 +15,7 @@ import GoalsPage from '@/pages/GoalsPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import PaymentPage from '@/pages/PaymentPage';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { FiMCPProvider, useFiMCP } from '@/contexts/FiMCPContext';
 import ChatInterface from '@/components/ChatInterface';
 import './App.css';
 
@@ -22,7 +24,10 @@ const queryClient = new QueryClient();
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/signin" />;
+  const { isSignedIn } = useUser();
+  const { isDemoMode } = useFiMCP();
+  
+  return (isAuthenticated || isSignedIn || isDemoMode) ? <>{children}</> : <Navigate to="/signin" />;
 };
 
 function AppContent() {
@@ -157,7 +162,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <AuthProvider>
-          <AppContent />
+          <FiMCPProvider>
+            <AppContent />
+          </FiMCPProvider>
         </AuthProvider>
       </Router>
     </QueryClientProvider>

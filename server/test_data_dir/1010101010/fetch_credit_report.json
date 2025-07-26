@@ -1,0 +1,51 @@
+{
+  "creditReport": {
+    "creditScore": 785,
+    "creditScoreRange": "300-850",
+    "creditHistory": {
+      "totalAccounts": 8,
+      "activeAccounts": 6,
+      "closedAccounts": 2,
+      "creditUtilization": 23.5,
+      "averageAccountAge": "4 years 2 months",
+      "oldestAccount": "8 years 1 month"
+    },
+    "accounts": [
+      {
+        "accountType": "Credit Card",
+        "lender": "HDFC Bank",
+        "accountStatus": "Active",
+        "creditLimit": 150000,
+        "currentBalance": 25000,
+        "lastPaymentDate": "2024-01-10",
+        "paymentHistory": "Excellent"
+      },
+      {
+        "accountType": "Personal Loan",
+        "lender": "ICICI Bank", 
+        "accountStatus": "Closed",
+        "originalAmount": 300000,
+        "currentBalance": 0,
+        "closedDate": "2023-12-15",
+        "paymentHistory": "Good"
+      },
+      {
+        "accountType": "Vehicle Loan",
+        "lender": "Bajaj Finance",
+        "accountStatus": "Active",
+        "originalAmount": 500000,
+        "currentBalance": 150000,
+        "lastPaymentDate": "2024-01-05",
+        "paymentHistory": "Excellent"
+      }
+    ],
+    "inquiries": [
+      {
+        "inquiryDate": "2023-11-15",
+        "inquiryType": "Credit Card Application",
+        "lender": "HDFC Bank"
+      }
+    ],
+    "creditReportDate": "2024-01-15T08:00:00Z"
+  }
+}

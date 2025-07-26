@@ -1,0 +1,100 @@
+{
+  "mutualFundTransactions": {
+    "summary": {
+      "totalInvestment": 846420,
+      "currentValue": 923850,
+      "totalGains": 77430,
+      "totalReturns": 9.15,
+      "activeFunds": 9
+    },
+    "funds": [
+      {
+        "fundName": "Axis Bluechip Fund - Direct Growth",
+        "fundCode": "AXIS_BC_DG",
+        "investment": 150000,
+        "currentValue": 165420,
+        "gains": 15420,
+        "returns": 10.28,
+        "units": 1523.45,
+        "sipActive": true,
+        "sipAmount": 5000,
+        "lastTransactionDate": "2024-01-10"
+      },
+      {
+        "fundName": "HDFC Mid-Cap Opportunities Fund - Direct Growth", 
+        "fundCode": "HDFC_MIDCAP_DG",
+        "investment": 120000,
+        "currentValue": 135600,
+        "gains": 15600,
+        "returns": 13.0,
+        "units": 892.34,
+        "sipActive": true,
+        "sipAmount": 3000,
+        "lastTransactionDate": "2024-01-10"
+      },
+      {
+        "fundName": "SBI Small Cap Fund - Direct Growth",
+        "fundCode": "SBI_SMALLCAP_DG", 
+        "investment": 80000,
+        "currentValue": 92400,
+        "gains": 12400,
+        "returns": 15.5,
+        "units": 445.67,
+        "sipActive": true,
+        "sipAmount": 2000,
+        "lastTransactionDate": "2024-01-10"
+      },
+      {
+        "fundName": "ICICI Prudential Technology Fund - Direct Growth",
+        "fundCode": "ICICI_TECH_DG",
+        "investment": 75000,
+        "currentValue": 81750,
+        "gains": 6750,
+        "returns": 9.0,
+        "units": 623.12,
+        "sipActive": false,
+        "sipAmount": 0,
+        "lastTransactionDate": "2023-12-15"
+      },
+      {
+        "fundName": "Mirae Asset Large Cap Fund - Direct Growth",
+        "fundCode": "MIRAE_LARGECAP_DG",
+        "investment": 100000,
+        "currentValue": 108500,
+        "gains": 8500,
+        "returns": 8.5,
+        "units": 1234.56,
+        "sipActive": true,
+        "sipAmount": 4000,
+        "lastTransactionDate": "2024-01-10"
+      }
+    ],
+    "recentTransactions": [
+      {
+        "date": "2024-01-10",
+        "type": "SIP",
+        "fundName": "Axis Bluechip Fund - Direct Growth",
+        "amount": 5000,
+        "units": 46.23,
+        "nav": 108.14
+      },
+      {
+        "date": "2024-01-10", 
+        "type": "SIP",
+        "fundName": "HDFC Mid-Cap Opportunities Fund - Direct Growth",
+        "amount": 3000,
+        "units": 19.74,
+        "nav": 151.98
+      },
+      {
+        "date": "2024-01-10",
+        "type": "SIP", 
+        "fundName": "Mirae Asset Large Cap Fund - Direct Growth",
+        "amount": 4000,
+        "units": 45.67,
+        "nav": 87.65
+      }
+    ],
+    "lastUpdated": "2024-01-15T09:00:00Z"
+  }
+}
