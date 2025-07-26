@@ -9,10 +9,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "start": "vite preview",
+    "build:dev": "vite build --mode development", 
+    "start": "vite preview --host 0.0.0.0 --port $PORT",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "vite preview --host 0.0.0.0 --port $PORT",
     "setup": "npm install"
   },
   "dependencies": {
