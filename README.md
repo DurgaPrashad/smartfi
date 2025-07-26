@@ -1,6 +1,6 @@
 # SmartFi - Fi MCP Integration
 
-A complete financial dashboard application integrating the Fi MCP Server with Clerk authentication and Railway hosting.
+A modern financial dashboard application that directly integrates with the Railway-hosted Fi MCP Server API, featuring Clerk authentication and Google Gemini AI analysis.
 
 ## 🌟 Features
 
@@ -38,36 +38,48 @@ A complete financial dashboard application integrating the Fi MCP Server with Cl
 
 ### Frontend
 - **React 18** with TypeScript
-- **Vite** for build tooling
+- **Vite** for build tooling and dev server
 - **Tailwind CSS** for styling
 - **Shadcn/ui** for components
 - **Clerk** for authentication
 - **Recharts** for data visualization
+- **Google Gemini 2.0 Flash** for AI analysis
 
-### Backend
-- **Go 1.21** for Fi MCP Server
-- **Gorilla Mux** for routing
-- **CORS** support
-- **JSON-based demo data**
+### API Integration
+- **Direct calls** to Railway Fi MCP Server
+- **Real-time data** from production Fi MCP API
+- **No local backend** required
 
 ### Deployment
-- **Railway** for hosting
-- **Docker** multi-stage builds
-- **Node.js** proxy server
+- **Vercel** for frontend hosting
+- **Environment variables** for secure API keys
+- **SPA routing** for seamless navigation
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   React Frontend │────│  Node.js Proxy   │────│   Go Backend    │
-│   (Port 8080)    │    │   (Port 8080)    │    │   (Port 3001)   │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-         │                        │                        │
-         │                        │                        │
-    ┌────▼────┐              ┌────▼────┐            ┌─────▼─────┐
-    │  Clerk  │              │ Railway │            │ Fi MCP    │
-    │   Auth  │              │Hosting  │            │ Test Data │
-    └─────────┘              └─────────┘            └───────────┘
+┌─────────────────────────────────────────┐
+│            React Frontend               │
+│         (Vite + TypeScript)             │
+│    ┌─────────────┐  ┌─────────────┐     │
+│    │    Clerk    │  │   Gemini    │     │
+│    │    Auth     │  │    AI       │     │
+│    └─────────────┘  └─────────────┘     │
+└─────────────────────────────────────────┘
+                      │
+                      │ Direct API Calls
+                      ▼
+┌─────────────────────────────────────────┐
+│        Railway Fi MCP Server           │
+│   https://fi-mcp-dev-production...      │
+│                                         │
+│  ┌─────────────────────────────────┐    │
+│  │        Financial Data           │    │
+│  │   • Net Worth • Credit Score    │    │
+│  │   • Bank Txns • Mutual Funds    │    │
+│  │   • EPF Details • Live Data     │    │
+│  └─────────────────────────────────┘    │
+└─────────────────────────────────────────┘
 ```
 
 ## 🚧 Local Development
@@ -88,62 +100,58 @@ cd smartfi-fi-mcp
 
 2. **Install dependencies**
 ```bash
-npm run setup
+npm install
 ```
 
 3. **Environment setup**
 Create `.env.local`:
 ```bash
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-4. **Start development servers**
+4. **Start development server**
 ```bash
 npm run dev
 ```
 
-This starts both frontend (Vite) and backend (Go) concurrently.
-
 ### Development URLs
 
-- **Frontend**: http://localhost:8080
-- **Backend API**: http://localhost:3001
+- **Frontend**: http://localhost:5173
+- **Fi MCP API**: https://fi-mcp-dev-production.up.railway.app
 
 ## 📦 Deployment
 
-### Railway Deployment
+### Vercel Deployment (Recommended)
 
-1. **Connect to Railway**
+1. **Connect to Vercel**
 ```bash
-# Install Railway CLI
-npm install -g @railway/cli
+# Install Vercel CLI
+npm install -g vercel
 
 # Login and deploy
-railway login
-railway link
-railway up
+vercel login
+vercel
 ```
 
 2. **Environment Variables**
-Set in Railway dashboard:
+Set in Vercel dashboard:
 ```
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_d29ydGh5LXJhY2VyLTc3LmNsZXJrLmFjY291bnRzLmRldiQ
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 3. **Build Configuration**
-Railway automatically detects the `Dockerfile` and builds the application.
+Vercel automatically detects the `vercel.json` configuration.
 
 ### Manual Build
 
 ```bash
 # Build frontend
-npm run build:frontend
+npm run build
 
-# Build backend
-npm run build:backend
-
-# Start production server
-npm start
+# Preview build locally
+npm run preview
 ```
 
 ## 🔐 Authentication

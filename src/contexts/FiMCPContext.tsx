@@ -37,7 +37,7 @@ export const useFiMCP = () => {
 };
 
 const API_BASE_URL = 'https://fi-mcp-dev-production.up.railway.app';
-const GEMINI_API_KEY = "AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isSignedIn } = useUser();
@@ -72,7 +72,7 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('fi_mcp_demo_mode', 'true');
     localStorage.setItem('fi_mcp_demo_phone', phoneNumber);
     
-    // Login to demo account
+    // Login to demo account directly on Railway Fi MCP
     try {
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
@@ -104,6 +104,7 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const callMCPAPI = async (toolName: string) => {
     try {
+      // Make direct call to Railway Fi MCP API
       const response = await fetch(`${API_BASE_URL}/mcp/stream`, {
         method: 'POST',
         headers: {
@@ -128,7 +129,7 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }
 
       if (result.result && result.result.login_url) {
-        // Need to login first
+        // Need to login first - open Railway login page
         window.open(result.result.login_url, '_blank');
         throw new Error('Please complete login in the opened window and try again');
       }
