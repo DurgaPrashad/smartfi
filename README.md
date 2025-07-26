@@ -5,15 +5,18 @@ A complete financial dashboard application integrating the Fi MCP Server with Cl
 ## 🌟 Features
 
 - **Dual Authentication**: Support for both Clerk authentication and Fi MCP demo accounts
-- **Real Financial Data**: Fetches data from Fi MCP Server API including:
-  - Net worth calculations
-  - Mutual fund portfolios
-  - Bank transactions
-  - Credit reports
-  - EPF details
+- **Live Financial Data**: Fetches ONLY from Railway-hosted Fi MCP API:
+  - Real-time net worth calculations
+  - Live mutual fund portfolios
+  - Actual bank transactions
+  - Current credit reports
+  - EPF account details
+- **AI Financial Advisor**: Powered by Google Gemini 2.0 Flash for:
+  - Comprehensive financial analysis
+  - Personalized investment insights
+  - Actionable recommendations
 - **Modern UI**: Built with React, TypeScript, and Tailwind CSS
-- **AI-Powered Chat**: Financial assistant powered by Fi MCP data
-- **Railway Hosting**: Fully deployed and ready to use
+- **Railway Hosting**: Fully deployed and production-ready
 
 ## 🚀 Live Demo
 
@@ -155,21 +158,27 @@ npm start
 - No real OTP verification
 - Instant access to financial data
 
+## 🤖 AI Financial Analysis
+
+**Powered by Google Gemini 2.0 Flash API**
+- Uses real Fi MCP data for personalized analysis
+- Provides comprehensive financial summaries
+- Offers actionable investment recommendations
+- Analyzes spending patterns and suggests optimizations
+
 ## 📊 Fi MCP API Integration
 
-### Supported Endpoints
+**Live Data Source**: `https://fi-mcp-dev-production.up.railway.app`
 
-- `POST /mcp/stream` - Main MCP endpoint
-- `GET /mockWebPage` - Demo login interface
-- `POST /login` - Demo authentication
+### Available Financial Tools
 
-### Available Tools
+- `fetch_net_worth` - Real-time asset and liability calculations
+- `fetch_credit_report` - Live credit score and detailed history
+- `fetch_epf_details` - Current EPF account balances and projections
+- `fetch_mutual_fund_transactions` - Live portfolio performance analysis
+- `fetch_bank_transactions` - Real transaction history and spending analytics
 
-- `fetch_net_worth` - Complete asset and liability breakdown
-- `fetch_credit_report` - Credit score and history
-- `fetch_epf_details` - EPF account information
-- `fetch_mutual_fund_transactions` - Portfolio analysis
-- `fetch_bank_transactions` - Transaction history and analytics
+**Note**: All local test data has been removed. The application exclusively uses the Railway-hosted Fi MCP API for authentic financial data.
 
 ## 🎨 UI Components
 

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -255,26 +255,27 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate phone number (check if test data exists)
-	possiblePaths := []string{
-		filepath.Join("server", "test_data_dir", loginReq.PhoneNumber),
-		filepath.Join("test_data_dir", loginReq.PhoneNumber),
-		filepath.Join("..", "server", "test_data_dir", loginReq.PhoneNumber),
+	// Validate phone number (allow any of the known demo numbers)
+	validNumbers := []string{
+		"1111111111", "2222222222", "3333333333", "4444444444", 
+		"5555555555", "6666666666", "7777777777", "8888888888", 
+		"9999999999", "1010101010", "1212121212", "1313131313",
+		"1414141414", "2020202020", "2121212121", "2525252525",
 	}
 	
-	var pathExists bool
-	for _, path := range possiblePaths {
-		if _, err := os.Stat(path); err == nil {
-			pathExists = true
+	isValid := false
+	for _, validNum := range validNumbers {
+		if loginReq.PhoneNumber == validNum {
+			isValid = true
 			break
 		}
 	}
 	
-	if !pathExists {
+	if !isValid {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"success": false,
-			"message": "Invalid phone number. Please select from available test numbers.",
+			"message": "Invalid phone number. Please select from available demo numbers.",
 		})
 		return
 	}
@@ -398,30 +399,57 @@ func getToolsList() ToolsListResponse {
 }
 
 func callTool(toolName, phoneNumber string) (interface{}, error) {
-	// Try different paths for development vs production
-	possiblePaths := []string{
-		filepath.Join("server", "test_data_dir", phoneNumber, toolName+".json"),
-		filepath.Join("test_data_dir", phoneNumber, toolName+".json"),
-		filepath.Join("..", "server", "test_data_dir", phoneNumber, toolName+".json"),
+	// Make API call to the Railway-hosted Fi MCP server
+	requestBody := map[string]interface{}{
+		"jsonrpc": "2.0",
+		"id":      1,
+		"method":  "tools/call",
+		"params": map[string]interface{}{
+			"name":      toolName,
+			"arguments": map[string]interface{}{},
+		},
 	}
-	
-	var data []byte
-	var err error
-	
-	for _, path := range possiblePaths {
-		if data, err = ioutil.ReadFile(path); err == nil {
-			break
-		}
-	}
-	
+
+	jsonData, err := json.Marshal(requestBody)
 	if err != nil {
-		return nil, fmt.Errorf("failed to load data for %s from any path: %v", toolName, err)
+		return nil, fmt.Errorf("failed to marshal request: %v", err)
 	}
 
-	var result interface{}
-	if err := json.Unmarshal(data, &result); err != nil {
-		return nil, fmt.Errorf("failed to parse data for %s: %v", toolName, err)
+	// Create request to Railway Fi MCP API
+	req, err := http.NewRequest("POST", "https://fi-mcp-dev-production.up.railway.app/mcp/stream", strings.NewReader(string(jsonData)))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
 
-	return result, nil
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Mcp-Session-Id", fmt.Sprintf("mcp-session-%s", phoneNumber))
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to make request to Fi MCP API: %v", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response: %v", err)
+	}
+
+	var mcpResponse struct {
+		JSONRPC string      `json:"jsonrpc"`
+		ID      int         `json:"id"`
+		Result  interface{} `json:"result"`
+		Error   interface{} `json:"error"`
+	}
+
+	if err := json.Unmarshal(body, &mcpResponse); err != nil {
+		return nil, fmt.Errorf("failed to parse MCP response: %v", err)
+	}
+
+	if mcpResponse.Error != nil {
+		return nil, fmt.Errorf("MCP API error: %v", mcpResponse.Error)
+	}
+
+	return mcpResponse.Result, nil
 }

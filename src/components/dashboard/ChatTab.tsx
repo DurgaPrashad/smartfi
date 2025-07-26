@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from '@/contexts/AuthContext';
+import { useFiMCP } from '@/contexts/FiMCPContext';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Sparkles, Crown, Lock, MessageCircle } from 'lucide-react';
+import { Send, Sparkles, Crown, Lock, MessageCircle, Database } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Message {
@@ -16,11 +17,17 @@ interface Message {
   timestamp: Date;
 }
 
-const ChatTab = () => {
+interface ChatTabProps {
+  data: any;
+  isLoading: boolean;
+}
+
+const ChatTab: React.FC<ChatTabProps> = ({ data, isLoading: dataLoading }) => {
+  const { analyzeFinancialData, isDemoMode, demoPhoneNumber } = useFiMCP();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm your AI financial assistant powered by Google's Gemini. I can help you with investment advice, portfolio analysis, and financial planning. What would you like to know?",
+      content: `Hello! I'm your AI financial assistant powered by Google's Gemini and Fi MCP data. ${isDemoMode ? `I have access to your ${demoPhoneNumber} financial profile.` : 'Please connect your financial accounts for personalized insights.'} I can analyze your portfolio, provide investment advice, and help with financial planning!`,
       isUser: false,
       timestamp: new Date()
     }
@@ -33,10 +40,10 @@ const ChatTab = () => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    if (!user?.isPremium && messages.length >= 6) {
+    if (!user?.isPremium && messages.length >= 10) {
       toast({
         title: "Premium Feature",
-        description: "Upgrade to Premium for unlimited AI conversations.",
+        description: "Upgrade to Premium for unlimited AI conversations. Free users get 10 messages.",
         variant: "destructive",
       });
       return;
@@ -55,22 +62,12 @@ const ChatTab = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: currentInput })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get AI response');
-      }
-
-      const data = await response.json();
-      const aiResponseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I apologize, but I couldn't generate a response at this time. Please try again.";
+      // Use Fi MCP + Gemini analysis
+      const analysis = await analyzeFinancialData(currentInput);
       
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: aiResponseText.replace(/\*/g, ''), // Remove any asterisks
+        content: analysis,
         isUser: false,
         timestamp: new Date()
       };

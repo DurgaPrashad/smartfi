@@ -50,9 +50,6 @@ COPY --from=frontend-builder /app/dist ./dist
 # Copy Go binary
 COPY --from=backend-builder /app/dist/server ./dist/server
 
-# Copy test data
-COPY --from=backend-builder /app/server/test_data_dir ./server/test_data_dir
-
 # Copy Node.js server
 COPY server.js ./
 

@@ -23,6 +23,7 @@ interface FiMCPContextType {
   fetchMutualFunds: () => Promise<void>;
   fetchBankTransactions: () => Promise<void>;
   fetchAllData: () => Promise<void>;
+  analyzeFinancialData: (question?: string) => Promise<string>;
 }
 
 const FiMCPContext = createContext<FiMCPContextType | undefined>(undefined);
@@ -36,6 +37,7 @@ export const useFiMCP = () => {
 };
 
 const API_BASE_URL = 'https://fi-mcp-dev-production.up.railway.app';
+const GEMINI_API_KEY = "AIzaSyCKxef2OEUNjIeH3XMD5nXbMJ-cUVYE_PI";
 
 export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isSignedIn } = useUser();
@@ -222,6 +224,75 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const analyzeFinancialData = async (question: string = "Provide a comprehensive financial analysis") => {
+    try {
+      const financialContext = JSON.stringify({
+        netWorth: data.netWorth,
+        creditReport: data.creditReport,
+        bankTransactions: data.bankTransactions,
+        mutualFunds: data.mutualFunds,
+        epfDetails: data.epfDetails,
+        userQuestion: question
+      });
+
+      const prompt = `You are a highly knowledgeable AI financial advisor. Analyze the following financial data and provide:
+
+1. A clear summary of their financial position (assets, liabilities, net worth)
+2. Personalized insights based on the data (investment strategy, risk analysis, debt advice)
+3. Actionable recommendations to improve or optimize their financial health
+
+User Question: ${question}
+
+Financial Data: ${financialContext}
+
+Please provide a comprehensive, actionable financial analysis in a friendly, professional tone.`;
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gemini API error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.candidates[0].content.parts[0].text;
+    } catch (error) {
+      console.error('Financial analysis error:', error);
+      
+      // Fallback analysis if Gemini fails
+      const netWorthData = data.netWorth?.netWorthResponse;
+      const totalNetWorth = netWorthData?.totalNetWorthValue ? parseInt(netWorthData.totalNetWorthValue.units) : 0;
+      const creditScore = data.creditReport?.creditReport?.creditScore || 0;
+      
+      return `**Financial Summary** (Fallback Analysis)
+
+**Net Worth**: ₹${totalNetWorth.toLocaleString()}
+**Credit Score**: ${creditScore || 'Not available'}
+
+**Key Insights**:
+- ${totalNetWorth > 1000000 ? 'You have a strong financial foundation' : 'Focus on building your wealth through systematic investments'}
+- ${creditScore >= 750 ? 'Excellent credit score - you can access the best loan rates' : creditScore >= 650 ? 'Good credit score - maintain this level' : 'Work on improving your credit score'}
+
+**Recommendations**:
+- Continue with SIP investments if you have active mutual funds
+- Maintain an emergency fund of 6-12 months expenses
+- Review and optimize your insurance coverage
+
+*Note: This is a basic analysis. For detailed insights, ensure all your financial accounts are connected.*`;
+    }
+  };
+
   const value = {
     data,
     isLoading,
@@ -236,6 +307,7 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     fetchMutualFunds,
     fetchBankTransactions,
     fetchAllData,
+    analyzeFinancialData,
   };
 
   return <FiMCPContext.Provider value={value}>{children}</FiMCPContext.Provider>;
