@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ClerkProvider } from '@clerk/clerk-react';
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from '@/components/layout/Navbar';
 import HomePage from '@/pages/HomePage';
@@ -13,11 +14,15 @@ import InvestmentsPage from '@/pages/InvestmentsPage';
 import GoalsPage from '@/pages/GoalsPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import PaymentPage from '@/pages/PaymentPage';
+import AuthDemo from '@/components/AuthDemo';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import ChatInterface from '@/components/ChatInterface';
 import './App.css';
 
 const queryClient = new QueryClient();
+
+// Clerk publishable key (demo key - replace with your actual key)
+const PUBLISHABLE_KEY = process.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_ZXhhY3QtZG9ua2V5LTMzLmNsZXJrLmFjY291bnRzLmRldiQ';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -36,6 +41,7 @@ function AppContent() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/signin" element={<SignInPage />} />
+          <Route path="/auth-demo" element={<AuthDemo />} />
           <Route 
             path="/dashboard" 
             element={
@@ -76,91 +82,53 @@ function AppContent() {
               </ProtectedRoute>
             } 
           />
-          <Route 
-            path="/agent" 
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/export" 
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            } 
-          />
         </Routes>
-      </main>
-      <Toaster />
-      {/* Floating AI Chat Agent */}
-      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 50 }}>
+        
+        {/* Chat Interface */}
         {showChat && (
-          <div style={{
-            width: '100vw',
-            maxWidth: 400,
-            height: '70vh',
-            maxHeight: 600,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
-            borderRadius: 16,
-            overflow: 'hidden',
-            background: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', background: 'rgba(16, 185, 129, 0.1)', padding: 8 }}>
-              <button
-                aria-label="Close chat"
-                onClick={() => setShowChat(false)}
-                style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#2563eb' }}
-              >
-                ×
-              </button>
-            </div>
-            <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <ChatInterface />
-            </div>
+          <div className="fixed bottom-20 right-4 z-50">
+            <ChatInterface onClose={() => setShowChat(false)} />
           </div>
         )}
-        {!showChat && (
-          <button
-            aria-label="Open SmartFi AI Chat"
-            onClick={() => setShowChat(true)}
-            style={{
-              background: 'linear-gradient(90deg, #10b981 0%, #2563eb 100%)',
-              color: 'white',
-              border: 'none',
-              borderRadius: '50%',
-              width: 56,
-              height: 56,
-              boxShadow: '0 4px 16px rgba(16,185,129,0.18)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 28,
-              cursor: 'pointer',
-              zIndex: 51,
-            }}
+        
+        {/* Chat Button */}
+        <button
+          onClick={() => setShowChat(!showChat)}
+          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-110 z-40"
+          aria-label="Open chat"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
           >
-            💬
-          </button>
-        )}
-      </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
+            />
+          </svg>
+        </button>
+      </main>
+      <Toaster />
     </div>
   );
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <AppContent />
+          <Router>
+            <AppContent />
+          </Router>
         </AuthProvider>
-      </Router>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </ClerkProvider>
   );
 }
 

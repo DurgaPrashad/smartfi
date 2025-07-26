@@ -62,13 +62,19 @@ const PaymentPage = () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // In production, this would integrate with Razorpay
+      interface RazorpayResponse {
+        razorpay_payment_id: string;
+        razorpay_order_id?: string;
+        razorpay_signature?: string;
+      }
+
       const options = {
         key: "rzp_test_e75mVTVwkTrOHy", // Demo key
         amount: 99900, // ₹999 in paise
         currency: "INR",
         name: "SmartFi Premium",
         description: "Upgrade to Premium Plan",
-        handler: function (response: any) {
+        handler: function (response: RazorpayResponse) {
           updatePremiumStatus(true);
           toast({
             title: "Welcome to Premium!",
