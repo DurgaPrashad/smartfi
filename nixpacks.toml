@@ -1,0 +1,18 @@
+[providers]
+node = "18.x"
+go = "1.21"
+
+[phases.setup]
+nixPkgs = ["nodejs_18", "go"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = [
+    "npm run build:frontend",
+    "cd server && go build -o ../dist/server main.go"
+]
+
+[start]
+cmd = "node server.js"

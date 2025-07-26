@@ -35,9 +35,7 @@ export const useFiMCP = () => {
   return context;
 };
 
-const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://fi-mcp-dev-production.up.railway.app'
-  : window.location.origin;
+const API_BASE_URL = 'https://fi-mcp-dev-production.up.railway.app';
 
 export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isSignedIn } = useUser();

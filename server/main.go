@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -258,8 +256,21 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Validate phone number (check if test data exists)
-	testDataPath := filepath.Join("server", "test_data_dir", loginReq.PhoneNumber)
-	if _, err := os.Stat(testDataPath); os.IsNotExist(err) {
+	possiblePaths := []string{
+		filepath.Join("server", "test_data_dir", loginReq.PhoneNumber),
+		filepath.Join("test_data_dir", loginReq.PhoneNumber),
+		filepath.Join("..", "server", "test_data_dir", loginReq.PhoneNumber),
+	}
+	
+	var pathExists bool
+	for _, path := range possiblePaths {
+		if _, err := os.Stat(path); err == nil {
+			pathExists = true
+			break
+		}
+	}
+	
+	if !pathExists {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"success": false,
@@ -387,11 +398,24 @@ func getToolsList() ToolsListResponse {
 }
 
 func callTool(toolName, phoneNumber string) (interface{}, error) {
-	testDataPath := filepath.Join("server", "test_data_dir", phoneNumber, toolName+".json")
+	// Try different paths for development vs production
+	possiblePaths := []string{
+		filepath.Join("server", "test_data_dir", phoneNumber, toolName+".json"),
+		filepath.Join("test_data_dir", phoneNumber, toolName+".json"),
+		filepath.Join("..", "server", "test_data_dir", phoneNumber, toolName+".json"),
+	}
 	
-	data, err := ioutil.ReadFile(testDataPath)
+	var data []byte
+	var err error
+	
+	for _, path := range possiblePaths {
+		if data, err = ioutil.ReadFile(path); err == nil {
+			break
+		}
+	}
+	
 	if err != nil {
-		return nil, fmt.Errorf("failed to load data for %s: %v", toolName, err)
+		return nil, fmt.Errorf("failed to load data for %s from any path: %v", toolName, err)
 	}
 
 	var result interface{}
