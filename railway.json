@@ -6,7 +6,8 @@
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "sleepApplication": false,
+    "sleepApplication": true,
+    "sleepTimeout": 3600,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
