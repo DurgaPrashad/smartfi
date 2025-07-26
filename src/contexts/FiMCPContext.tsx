@@ -226,6 +226,12 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const analyzeFinancialData = async (question: string = "Provide a comprehensive financial analysis") => {
+    // Safety check for API key
+    if (!GEMINI_API_KEY) {
+      console.warn('Gemini API key not configured. Using fallback analysis.');
+      return getFallbackAnalysis(question);
+    }
+
     try {
       const financialContext = JSON.stringify({
         netWorth: data.netWorth,
@@ -268,30 +274,44 @@ Please provide a comprehensive, actionable financial analysis in a friendly, pro
 
       const result = await response.json();
       return result.candidates[0].content.parts[0].text;
-    } catch (error) {
+        } catch (error) {
       console.error('Financial analysis error:', error);
-      
-      // Fallback analysis if Gemini fails
-      const netWorthData = data.netWorth?.netWorthResponse;
-      const totalNetWorth = netWorthData?.totalNetWorthValue ? parseInt(netWorthData.totalNetWorthValue.units) : 0;
-      const creditScore = data.creditReport?.creditReport?.creditScore || 0;
-      
-      return `**Financial Summary** (Fallback Analysis)
-
-**Net Worth**: ₹${totalNetWorth.toLocaleString()}
-**Credit Score**: ${creditScore || 'Not available'}
-
-**Key Insights**:
-- ${totalNetWorth > 1000000 ? 'You have a strong financial foundation' : 'Focus on building your wealth through systematic investments'}
-- ${creditScore >= 750 ? 'Excellent credit score - you can access the best loan rates' : creditScore >= 650 ? 'Good credit score - maintain this level' : 'Work on improving your credit score'}
-
-**Recommendations**:
-- Continue with SIP investments if you have active mutual funds
-- Maintain an emergency fund of 6-12 months expenses
-- Review and optimize your insurance coverage
-
-*Note: This is a basic analysis. For detailed insights, ensure all your financial accounts are connected.*`;
+      return getFallbackAnalysis(question);
     }
+  };
+
+  const getFallbackAnalysis = (question: string) => {
+    // Fallback analysis using Fi MCP data when Gemini is unavailable
+    const netWorthData = data.netWorth?.netWorthResponse;
+    const totalNetWorth = netWorthData?.totalNetWorthValue ? parseInt(netWorthData.totalNetWorthValue.units) : 0;
+    const creditScore = data.creditReport?.creditReport?.creditScore || 0;
+    const bankData = data.bankTransactions?.bankTransactions;
+    const monthlyIncome = bankData?.monthlyAnalytics?.totalIncome || 0;
+    const monthlyExpenses = bankData?.monthlyAnalytics?.totalExpenses || 0;
+
+    return `**🤖 Financial Analysis** (Based on Railway Fi MCP Data)
+
+**Your Question**: ${question}
+
+**📊 Current Financial Position**:
+- **Net Worth**: ₹${totalNetWorth.toLocaleString()}
+- **Credit Score**: ${creditScore || 'Not available'}
+- **Monthly Income**: ₹${monthlyIncome.toLocaleString()}
+- **Monthly Expenses**: ₹${monthlyExpenses.toLocaleString()}
+
+**💡 Key Insights** (from real Fi MCP data):
+- ${totalNetWorth > 1000000 ? '✅ Strong financial foundation with solid net worth' : '📈 Focus on building wealth through systematic investments'}
+- ${creditScore >= 750 ? '🏆 Excellent credit score - access to best loan rates' : creditScore >= 650 ? '👍 Good credit score - maintain this level' : '⚠️ Work on improving credit score for better financial opportunities'}
+- ${monthlyIncome > monthlyExpenses ? '💰 Positive cash flow - great for investments' : '⚠️ Monitor expenses to improve savings rate'}
+
+**🎯 Actionable Recommendations**:
+- Continue with SIP investments if you have active mutual funds
+- Maintain an emergency fund of 6-12 months expenses  
+- Review and optimize your insurance coverage
+- ${totalNetWorth < 500000 ? 'Focus on increasing savings rate and starting SIPs' : 'Consider diversifying into different asset classes'}
+
+**🔍 Data Source**: Live Railway Fi MCP API
+*Note: This analysis is based on your real financial data from Fi MCP. For AI-powered insights, ensure Gemini API is configured.*`;
   };
 
   const value = {

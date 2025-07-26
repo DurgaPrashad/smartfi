@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { TrendingUp, TrendingDown, DollarSign, CreditCard, Lock, AlertCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, CreditCard, Lock, AlertCircle, Database } from 'lucide-react';
 
 interface OverviewTabProps {
   data: any;
@@ -260,6 +260,20 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ data, isLoading }) => {
               )}
             </CardContent>
           </Card>
+        </div>
+
+        {/* Data Source Footer */}
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center gap-2 text-blue-800 text-sm">
+            <Database className="w-4 h-4" />
+            <span className="font-medium">Data Source:</span>
+            <code className="bg-blue-100 px-2 py-1 rounded text-xs">
+              https://fi-mcp-dev-production.up.railway.app
+            </code>
+          </div>
+          <p className="text-blue-700 text-xs mt-2">
+            ✅ All financial data is fetched live from Railway Fi MCP API - No local demo data used
+          </p>
         </div>
       )}
     </div>

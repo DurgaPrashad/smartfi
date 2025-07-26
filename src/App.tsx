@@ -19,6 +19,20 @@ import { FiMCPProvider, useFiMCP } from '@/contexts/FiMCPContext';
 import ChatInterface from '@/components/ChatInterface';
 import './App.css';
 
+// 🔒 Safety check for required environment variables
+const requiredEnvVars = {
+  VITE_CLERK_PUBLISHABLE_KEY: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
+};
+
+const missingEnvVars = Object.entries(requiredEnvVars)
+  .filter(([_, value]) => !value)
+  .map(([key]) => key);
+
+if (missingEnvVars.length > 0) {
+  console.warn('⚠️ Missing required environment variables:', missingEnvVars);
+  console.warn('📋 Please check your .env.local file or deployment environment variables');
+}
+
 const queryClient = new QueryClient();
 
 // Protected Route Component
