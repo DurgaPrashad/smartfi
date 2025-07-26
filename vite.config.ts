@@ -7,21 +7,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
-    proxy: {
-      '/mcp': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-      '/mockWebPage': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-      '/login': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      }
-    }
+    port: 5173,
   },
   plugins: [
     react(),
@@ -35,5 +21,20 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-alert-dialog'],
+          charts: ['recharts'],
+          clerk: ['@clerk/clerk-react'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', '@clerk/clerk-react']
   },
 }));

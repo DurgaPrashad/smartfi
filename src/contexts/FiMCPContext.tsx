@@ -104,7 +104,10 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const callMCPAPI = async (toolName: string) => {
     try {
-      // Make direct call to Railway Fi MCP API
+      // Make direct call to Railway Fi MCP API with timeout and error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
       const response = await fetch(`${API_BASE_URL}/mcp/stream`, {
         method: 'POST',
         headers: {
@@ -119,8 +122,15 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             name: toolName,
             arguments: {}
           }
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
       const result = await response.json();
       
@@ -137,6 +147,17 @@ export const FiMCPProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       return result.result;
     } catch (err) {
       console.error(`Error calling ${toolName}:`, err);
+      
+      // Handle specific error types
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          throw new Error('Request timeout - please try again');
+        }
+        if (err.message.includes('Failed to fetch')) {
+          throw new Error('Network error - please check your connection');
+        }
+      }
+      
       throw err;
     }
   };
