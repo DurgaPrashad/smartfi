@@ -10,6 +10,7 @@ SmartFi is an AI-powered personal finance assistant that consolidates your entir
 
 ### Prerequisites
 - Go 1.23 or later
+<img width="1768" height="853" alt="image" src="https://github.com/user-attachments/assets/7810018a-6739-4451-be42-e3d13ba7cb49" />
 
 ### Steps
 ```bash
@@ -22,6 +23,7 @@ go mod tidy
 FI_MCP_PORT=8080 go run .
 ```
 The server will start on http://localhost:8080.
+<img width="1765" height="862" alt="image" src="https://github.com/user-attachments/assets/233fb4cb-d35d-446a-8324-20d93b57137e" />
 
 ### Authentication Flow
 - When you call an API/tool, the server checks for a valid session.
@@ -38,6 +40,7 @@ The server will start on http://localhost:8080.
 | ...          | ... (see full list in fi-mcp-dev README) |
 
 ---
+<img width="1757" height="827" alt="image" src="https://github.com/user-attachments/assets/efcf6d03-13eb-44f8-8ca1-a0c94d7d59e5" />
 
 ## 🔑 Available API Tools (Endpoints)
 
@@ -169,6 +172,7 @@ curl -X POST -H "Content-Type: application/json" -H "Mcp-Session-Id: mcp-session
 - Keyboard navigation, screen reader support, and color contrast are built-in.
 
 ---
+![Uploading image.png…]()
 
 ## 🧑‍💻 Best Practices
 - Always check if required accounts are connected before displaying data.
@@ -184,9 +188,3 @@ curl -X POST -H "Content-Type: application/json" -H "Mcp-Session-Id: mcp-session
 
 ---
 
-## 🤝 Contributing & Support
-See original contributing guidelines. For support, email support@smartfi.app or join our Discord.
-
----
-
-**Built with ❤️ for smarter financial futures**
