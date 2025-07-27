@@ -83,7 +83,7 @@ https://github.com/user-attachments/assets/d2d1a462-def0-4774-aeb2-17a506ff1647
 
 
 **AI-Powered Financial Agent using Fi’s MCP Server**
-This solution showcases an intelligent, secure, and privacy-first AI experience built on Fi’s MCP (Money Control Platform). The agent delivers deeply personalized financial insights by consuming structured data such as:
+- This solution showcases an intelligent, secure, and privacy-first AI experience built on Fi’s MCP (Money Control Platform). The agent delivers deeply personalized financial insights by consuming structured data such as:
 
 Assets & Liabilities
 
