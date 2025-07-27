@@ -5,6 +5,7 @@
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7810018a-6739-4451-be42-e3d13ba7cb49" alt="SmartFi Banner" width="80%" />
 </p>
+<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
 
 <p align="center">
   <a href="https://smartfi-topaz.vercel.app/">
