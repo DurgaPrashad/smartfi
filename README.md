@@ -62,6 +62,7 @@
 
 ✅ **MCP-Powered 360° View**
 > Real-time snapshot from 18+ sources (banks, SIPs, loans, EPF).
+<img width="1802" height="766" alt="image" src="https://github.com/user-attachments/assets/00bf3dfc-f12c-42a7-91b6-7ec2ba9450f0" />
 
 ✅ **Goal-Based AI Guidance**
 > Set financial goals & get personalized progress tracking.
