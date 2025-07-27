@@ -42,6 +42,7 @@
 ## 🚀 Our Solution: SmartFi
 
 **SmartFi** is an *AI-enabled conversational financial agent* powered by Google Gemini and Fi Money's MCP Server. It delivers personalized financial insights, harmonizes your financial footprint from 18+ sources, and helps you make smarter financial decisions in real time.
+<img width="1902" height="736" alt="image" src="https://github.com/user-attachments/assets/1c069b92-2a50-4808-b39a-9be7b5d7061b" />
 
 🧠 **Ask Gemini:**
 - "Can I afford a ₹50L loan?"
@@ -146,7 +147,8 @@ https://github.com/DurgaPrashad/fi-mcp-dev/blob/main/README.md
 - **Firebase** – Store goals and user data
 - **Railway** – Backend deployment
 - **Vercel** – Live web app hosting
- <img src="./images/architecture.png" alt="SmartFi Architecture" width="80%" />
+<img width="1902" height="736" alt="image" src="https://github.com/user-attachments/assets/cd11662f-31b7-4008-bff8-2e507ee5970c" />
+
 ---
 
 ## 🔑 Available API Tools (Endpoints)
