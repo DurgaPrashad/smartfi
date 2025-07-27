@@ -79,11 +79,13 @@
 
 ## 🏗️ How to Run the Fi MCP Dev Server
 
+
+
 SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which simulates real-world financial data.
 
 ### Prerequisites
 - Go 1.23 or later
-
+<img width="1727" height="786" alt="image" src="https://github.com/user-attachments/assets/860af6f1-61b2-422e-9553-00c01b6d2f7f" />
 ### Steps
 1.  Clone the `fi-mcp-dev` repository:
     ```bash
