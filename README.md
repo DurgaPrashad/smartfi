@@ -78,6 +78,10 @@
 
 ---
 
+
+https://github.com/user-attachments/assets/d2d1a462-def0-4774-aeb2-17a506ff1647
+
+
 ## 🧠 Tech Stack
 
 ### ⚙️ Core AI
