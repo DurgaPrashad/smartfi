@@ -1,11 +1,10 @@
 <h1 align="center">💡 SmartFi – Your AI Financial Strategist</h1>
-<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
+
 <p align="center"><i>"Let AI speak to your money."</i></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7810018a-6739-4451-be42-e3d13ba7cb49" alt="SmartFi Banner" width="80%" />
 </p>
-
 
 <p align="center">
   <a href="https://smartfi-topaz.vercel.app/">
@@ -24,11 +23,8 @@
 ## 📸 Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/233fb4cb-d35d-446a-8324-20d93b57137e" alt="Dashboard Screenshot" width="70%" />
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/efcf6d03-13eb-44f8-8ca1-a0c94d7d59e5" alt="Chat Assistant Screenshot" width="70%" />
+  <img src="https://github.com/user-attachments/assets/233fb4cb-d35d-446a-8324-20d93b57137e" width="48%"/>
+  <img src="https://github.com/user-attachments/assets/efcf6d03-13eb-44f8-8ca1-a0c94d7d59e5" width="48%"/>
 </p>
 
 ---
@@ -41,139 +37,148 @@
 
 ## 🚀 Our Solution: SmartFi
 
-**SmartFi** is an *AI-enabled conversational financial agent* powered by Google Gemini and Fi Money's MCP Server. It delivers personalized financial insights, harmonizes your financial footprint from 18+ sources, and helps you make smarter financial decisions in real time.
-<img width="1902" height="736" alt="image" src="https://github.com/user-attachments/assets/1c069b92-2a50-4808-b39a-9be7b5d7061b" />
+**SmartFi** is an **AI-powered financial assistant** built using **Google Gemini** and **Fi Money’s MCP Server**. It aggregates your financial data from 18+ sources and provides personalized insights to help you make smart, timely decisions.
 
 🧠 **Ask Gemini:**
-- "Can I afford a ₹50L loan?"
-- "Which of my SIPs haven’t performed well?"
-- "What will I save by 40?"
+- *“Can I afford a ₹50L loan?”*
+- *“Which of my SIPs haven’t performed well?”*
+- *“What will I save by 40?”*
 
-📊 **Get:**
-- Portfolio snapshots
-- Goal-based insights
-- Forecasts and suggestions
+📊 **Get Insights On:**
+- Portfolio & net worth
+- Financial goal progress
+- Investment performance
+- Forecasts & actionables
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1c069b92-2a50-4808-b39a-9be7b5d7061b" width="90%"/>
+</p>
 
 ---
 
 ## ✨ Features
 
-✅ **Conversational Financial Assistant**
-> Ask SmartFi your finance questions in natural language.
+✅ **Conversational Financial Assistant**  
+> Ask financial questions in plain English.
 
-✅ **MCP-Powered 360° View**
-> Real-time snapshot from 18+ sources (banks, SIPs, loans, EPF).
+✅ **MCP-Powered 360° Snapshot**  
+> Unified view from banks, SIPs, loans, stocks, EPF & more.
 
-✅ **Goal-Based AI Guidance**
-> Set financial goals & get personalized progress tracking.
+✅ **Goal-Based AI Guidance**  
+> Create financial goals and track progress with AI help.
 
-✅ **Proactive Investment Insights**
-> Flag underperforming SIPs & suggest smarter options.
+✅ **Proactive Investment Insights**  
+> Spot underperforming assets and get recommendations.
 
-✅ **Future Scenario Modeling**
-> Visual forecasts based on spending or saving habits.
+✅ **Forecast Modeling**  
+> AI-based visual future simulations (e.g. savings vs. spend).
 
-✅ **Privacy-First by Design**
-> Your data, your control – backed by Fi MCP’s secure architecture.
-
----
-
-## 🏗️ How to Run the Fi MCP Dev Server
-
-
-
-SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which simulates real-world financial data.
-
-### Prerequisites
-- Go 1.23 or later
-<img width="1727" height="786" alt="image" src="https://github.com/user-attachments/assets/860af6f1-61b2-422e-9553-00c01b6d2f7f" />
-### Steps
-1.  Clone the `fi-mcp-dev` repository:
-    ```bash
-    # Clone the fi-mcp-dev repository
-    # (or use your own fork)
-    git clone [https://github.com/epiFi/fi-mcp-dev.git](https://github.com/epiFi/fi-mcp-dev.git)
-    cd fi-mcp-dev
-    ```
-2.  Install dependencies and run the server:
-    ```bash
-    go mod tidy
-    FI_MCP_PORT=8080 go run .
-    ```
-    The server will start on `http://localhost:8080`.
-
-### Authentication Flow
-- When you call an API/tool, the server checks for a valid session.
-- If not authenticated, you’ll get a `login_url` in the response.
-- Open the login URL in your browser, enter an allowed phone number (see below), and any OTP/passcode.
-- On success, your session is active for the server run.
-- 
-https://github.com/DurgaPrashad/fi-mcp-dev/blob/main/README.md
-
-#### Test Phone Numbers & Scenarios
-| Phone Number | Scenario Description |
-|--------------|----------------------|
-| `1111111111` | No assets connected. Only savings account balance present. |
-| `2222222222` | All assets connected (Banks, EPF, Indian/US stocks, Credit report). Large MF portfolio. |
-| `3333333333` | All assets connected. Small MF portfolio. |
-| ...          | ... (see full list in fi-mcp-dev README) |
+✅ **Privacy First**  
+> Built on Fi MCP's secure-by-design architecture.
 
 ---
-## 🧱 Architecture
+
+## 🧠 Tech Stack
+
+### ⚙️ Core AI
+- **Google Gemini** – NLP for financial reasoning
+- **Vertex AI / Agent Builder** – Tool orchestration
+- **Firebase AI Studio** – Prompt & workflow designer
+
+### 💰 Finance Data Integration
+- **Fi Money MCP Server** – Aggregated finance source
+- **MCP API** – Tools like `fetch_net_worth`, `fetch_credit_report`
+
+### 🌐 Web App
+- **React.js / Next.js** – Frontend
+- **Firebase** – Goal/data storage
+- **Railway** – Backend hosting
+- **Vercel** – Frontend hosting
 
 <p align="center">
- 
+  <img src="https://github.com/user-attachments/assets/abdbac6d-2245-4991-a8a4-422cb227d9c1" width="90%"/>
 </p>
 
 ---
 
-## 🤖 Tech Stack
-<img width="1892" height="726" alt="image" src="https://github.com/user-attachments/assets/abdbac6d-2245-4991-a8a4-422cb227d9c1" />
+## 🔑 API Tools (MCP Endpoints)
 
-### Core AI Stack
-- **Google Gemini** – Natural language understanding & insights
-- **Vertex AI / Agent Builder** – Tool orchestration for Gemini
-- **firebase AI Studio** – Prompt and workflow design
+| Tool | Description |
+|------|-------------|
+| `fetch_net_worth` | Real-time net worth from connected accounts |
+| `fetch_credit_report` | Full credit report snapshot |
+| `fetch_epf_details` | EPF account info |
+| `fetch_mf_transactions` | SIP & MF transaction history |
 
-- 
-<img width="1912" height="691" alt="image" src="https://github.com/user-attachments/assets/c8c693bd-ddc8-4d12-899e-43a958582ce0" />
-
-### Finance Data Integration
-- **Fi Money’s MCP Server** – Secure unified financial data from 18+ sources
-- **FI MCP API** – Gateway for SmartFi to access user portfolios
-
-### Web Development
-- **React.js / Next.js** – Responsive frontend
-- **Firebase** – Store goals and user data
-- **Railway** – Backend deployment
-- **Vercel** – Live web app hosting
-<img width="1902" height="736" alt="image" src="https://github.com/user-attachments/assets/cd11662f-31b7-4008-bff8-2e507ee5970c" />
+Each endpoint has error handling for disconnected accounts and offers user prompts accordingly.
 
 ---
 
-## 🔑 Available API Tools (Endpoints)
+## 🏗️ Setting up the Fi MCP Dev Server
 
-### 1. `fetch_net_worth`
-- **Purpose**: Calculate comprehensive net worth using actual data from connected accounts.
-- **Use Cases**: Portfolio analysis, net worth tracking, financial health, investment performance, debt-to-asset ratio.
+### 📦 Prerequisites
+- Go 1.23+
 
-### 2. `fetch_credit_report`
-- **Purpose**: Retrieve comprehensive credit report information.
+### 🧪 Steps to Run
+```bash
+# Clone the dev server
+git clone https://github.com/epiFi/fi-mcp-dev.git
+cd fi-mcp-dev
 
-### 3. `fetch_epf_details`
-- **Purpose**: Access Employee Provident Fund account information.
+# Install dependencies
+go mod tidy
 
-### 4. `fetch_mf_transactions`
-- **Purpose**: Retrieve mutual funds transaction history for portfolio analysis.
-
-*Error Handling*: Each endpoint provides clear guidance if the required accounts are not connected, prompting the user to link them.
+# Start the dev server
+FI_MCP_PORT=8080 go run .
+Each endpoint has error handling for disconnected accounts and offers user prompts accordingly.
 
 ---
 
-## 🛠️ Integration Examples
+## 🏗️ Setting up the Fi MCP Dev Server
 
-### Python Example (using mcp client)
-```python
+### 📦 Prerequisites
+- Go 1.23+
+
+### 🧪 Steps to Run
+```bash
+# Clone the dev server
+git clone https://github.com/epiFi/fi-mcp-dev.git
+cd fi-mcp-dev
+
+# Install dependencies
+go mod tidy
+
+# Start the dev server
+FI_MCP_PORT=8080 go run .
+Access server at: http://localhost:8080
+
+🔐 Authentication Flow
+Try calling a tool → server checks for session.
+
+If not found, you'll get a login_url.
+
+Open it in your browser → enter test phone (below) + OTP/passcode.
+
+Your session is now active for the session.
+
+Test Numbers & Scenarios
+Phone Number	Scenario
+1111111111	No assets (basic savings account)
+2222222222	All assets + EPF + credit + MF portfolio
+3333333333	All assets (minimal mutual fund portfolio)
+
+More in fi-mcp-dev README
+
+🧱 Architecture Overview
+sql
+Copy
+Edit
+User → SmartFi UI → Gemini AI (via AgentBuilder) → Fi MCP APIs → Real-time Financial Data
+🧪 Integration Examples
+🐍 Python
+python
+Copy
+Edit
 from mcp.client.streamable_http import streamablehttp_client
 from mcp.client.session import ClientSession
 import asyncio
@@ -182,47 +187,48 @@ async def main():
     async with streamablehttp_client("http://localhost:8080/mcp/stream") as (read_stream, write_stream, _):
         async with ClientSession(read_stream, write_stream) as session:
             await session.initialize()
-            tools = await session.list_tools()
-            print(tools)
-            # Example: fetch net worth
             networth = await session.call('networth:fetch_net_worth')
             print(networth)
 
-if __name__ == "__main__":
-    asyncio.run(main())
-
-JavaScript Example
-JavaScript
-
+asyncio.run(main())
+🌐 JavaScript
+js
+Copy
+Edit
 async function getUserNetWorth() {
-  const response = await fetch('/api/mcp', {
+  const res = await fetch('/api/mcp', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Mcp-Session-Id': 'your-session-id' },
-    body: JSON.stringify({ method: 'tools/call', params: { name: 'fetch_net_worth', arguments: {} } })
+    headers: {
+      'Content-Type': 'application/json',
+      'Mcp-Session-Id': 'your-session-id'
+    },
+    body: JSON.stringify({
+      method: 'tools/call',
+      params: { name: 'fetch_net_worth', arguments: {} }
+    })
   });
-  const data = await response.json();
-  // handle data
+  const data = await res.json();
+  console.log(data);
 }
-Curl Example
-Bash
-
+🌀 cURL
+bash
+Copy
+Edit
 curl -X POST \
   -H "Content-Type: application/json" \
   -H "Mcp-Session-Id: mcp-session-xxxx" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"fetch_net_worth","arguments":{}}}' \
   http://localhost:8080/mcp/stream
 🔮 Future Scope
-⚠ Real-time fraud detection
+✅ Real-time fraud detection
 
-🧠 Advanced predictive market insights
+📈 Predictive market intelligence
 
-🤖 Secure automated savings & payments
+🔁 Automated savings/payment triggers
 
-🗣 Voice Assistant integration (Google Assistant, Alexa)
+🎙️ Voice assistant support (Alexa, Google)
 
-📱 Native mobile app & insurance/tax expansion
+📱 Native mobile app, tax & insurance coverage
 
 📣 Call to Action
-
-We're building the future of intelligent personal finance. Be a part of it!
-
+We're building the future of intelligent personal finance. Join us in revolutionizing how people interact with money using AI.
