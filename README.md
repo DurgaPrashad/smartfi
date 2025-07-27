@@ -1,5 +1,5 @@
 <h1 align="center">💡 SmartFi – Your AI Financial Strategist</h1>
-<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
+
 <p align="center"><i>"Let AI speak to your money."</i></p>
 
 <p align="center">
@@ -135,7 +135,7 @@ SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which si
 ### Finance Data Integration
 - **Fi Money’s MCP Server** – Secure unified financial data from 18+ sources
 - **FI MCP API** – Gateway for SmartFi to access user portfolios
-
+<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
 ### Web Development
 - **React.js / Next.js** – Responsive frontend
 - **Firebase** – Store goals and user data
