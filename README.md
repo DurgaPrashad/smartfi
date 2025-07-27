@@ -1,5 +1,5 @@
 <h1 align="center">💡 SmartFi – Your AI Financial Strategist</h1>
-
+<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
 <p align="center"><i>"Let AI speak to your money."</i></p>
 
 <p align="center">
@@ -62,7 +62,6 @@
 
 ✅ **MCP-Powered 360° View**
 > Real-time snapshot from 18+ sources (banks, SIPs, loans, EPF).
-<img width="1802" height="766" alt="image" src="https://github.com/user-attachments/assets/00bf3dfc-f12c-42a7-91b6-7ec2ba9450f0" />
 
 ✅ **Goal-Based AI Guidance**
 > Set financial goals & get personalized progress tracking.
@@ -107,6 +106,8 @@ SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which si
 - If not authenticated, you’ll get a `login_url` in the response.
 - Open the login URL in your browser, enter an allowed phone number (see below), and any OTP/passcode.
 - On success, your session is active for the server run.
+- 
+https://github.com/DurgaPrashad/fi-mcp-dev/blob/main/README.md
 
 #### Test Phone Numbers & Scenarios
 | Phone Number | Scenario Description |
@@ -120,28 +121,32 @@ SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which si
 ## 🧱 Architecture
 
 <p align="center">
-  <img src="./images/architecture.png" alt="SmartFi Architecture" width="80%" />
+ 
 </p>
 
 ---
 
 ## 🤖 Tech Stack
+<img width="1892" height="726" alt="image" src="https://github.com/user-attachments/assets/abdbac6d-2245-4991-a8a4-422cb227d9c1" />
 
 ### Core AI Stack
 - **Google Gemini** – Natural language understanding & insights
 - **Vertex AI / Agent Builder** – Tool orchestration for Gemini
-- **Google Cloud AI Studio** – Prompt and workflow design
+- **firebase AI Studio** – Prompt and workflow design
+
+- 
+<img width="1912" height="691" alt="image" src="https://github.com/user-attachments/assets/c8c693bd-ddc8-4d12-899e-43a958582ce0" />
 
 ### Finance Data Integration
 - **Fi Money’s MCP Server** – Secure unified financial data from 18+ sources
 - **FI MCP API** – Gateway for SmartFi to access user portfolios
-<img width="1810" height="853" alt="image" src="https://github.com/user-attachments/assets/f1b4f4fb-3e70-4060-9af8-37877be43f93" />
+
 ### Web Development
 - **React.js / Next.js** – Responsive frontend
 - **Firebase** – Store goals and user data
 - **Railway** – Backend deployment
 - **Vercel** – Live web app hosting
-
+ <img src="./images/architecture.png" alt="SmartFi Architecture" width="80%" />
 ---
 
 ## 🔑 Available API Tools (Endpoints)
