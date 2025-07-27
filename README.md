@@ -96,7 +96,8 @@
 - **Vercel** – Frontend hosting
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/abdbac6d-2245-4991-a8a4-422cb227d9c1" width="90%"/>
+  <img width="1628" height="633" alt="image" src="https://github.com/user-attachments/assets/7c39ce0d-9bac-4c85-8cf0-02cd73d60cb7" />
+
 </p>
 
 ---
@@ -151,6 +152,7 @@ go mod tidy
 # Start the dev server
 FI_MCP_PORT=8080 go run .
 Access server at: http://localhost:8080
+<img width="1800" height="838" alt="image" src="https://github.com/user-attachments/assets/6c37fd55-d9a7-4e3e-a5ed-80653b30447f" />
 
 🔐 Authentication Flow
 Try calling a tool → server checks for session.
