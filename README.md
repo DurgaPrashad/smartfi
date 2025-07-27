@@ -1,109 +1,161 @@
+<h1 align="center">💡 SmartFi – Your AI Financial Strategist</h1>
 
-# SmartFi — Your Personal Finance AI Agent
+<p align="center"><i>"Let AI speak to your money."</i></p>
 
-## Overview
-SmartFi is an AI-powered personal finance assistant that consolidates your entire financial picture and provides actionable, personalized recommendations. It integrates with the Fi MCP (Model Context Protocol) dev server, which simulates real-world financial data for development and hackathon use.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7810018a-6739-4451-be42-e3d13ba7cb49" alt="SmartFi Banner" width="80%" />
+</p>
+
+<p align="center">
+  <a href="https://smartfi-topaz.vercel.app/">
+    <img src="https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=vercel" alt="Live Demo"/>
+  </a>
+  <a href="https://youtu.be/M-PEB5ryV6o">
+    <img src="https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube" alt="Demo Video"/>
+  </a>
+  <a href="https://github.com/DurgaPrashad/smartfi">
+    <img src="https://img.shields.io/badge/View-Code-000000?style=for-the-badge&logo=github" alt="GitHub"/>
+  </a>
+</p>
+
+---
+
+## 📸 Preview
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/233fb4cb-d35d-446a-8324-20d93b57137e" alt="Dashboard Screenshot" width="70%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/efcf6d03-13eb-44f8-8ca1-a0c94d7d59e5" alt="Chat Assistant Screenshot" width="70%" />
+</p>
+
+---
+
+## 🔍 Problem Statement
+
+> Your financial life is scattered across accounts—banks, investments, credit, EPF. This fragmentation creates confusion, stress, and poor decision-making. Even the best AI tools fall short without access to this structured data.
+
+---
+
+## 🚀 Our Solution: SmartFi
+
+**SmartFi** is an *AI-enabled conversational financial agent* powered by Google Gemini and Fi Money's MCP Server. It delivers personalized financial insights, harmonizes your financial footprint from 18+ sources, and helps you make smarter financial decisions in real time.
+
+🧠 **Ask Gemini:**
+- "Can I afford a ₹50L loan?"
+- "Which of my SIPs haven’t performed well?"
+- "What will I save by 40?"
+
+📊 **Get:**
+- Portfolio snapshots
+- Goal-based insights
+- Forecasts and suggestions
+
+---
+
+## ✨ Features
+
+✅ **Conversational Financial Assistant**
+> Ask SmartFi your finance questions in natural language.
+
+✅ **MCP-Powered 360° View**
+> Real-time snapshot from 18+ sources (banks, SIPs, loans, EPF).
+
+✅ **Goal-Based AI Guidance**
+> Set financial goals & get personalized progress tracking.
+
+✅ **Proactive Investment Insights**
+> Flag underperforming SIPs & suggest smarter options.
+
+✅ **Future Scenario Modeling**
+> Visual forecasts based on spending or saving habits.
+
+✅ **Privacy-First by Design**
+> Your data, your control – backed by Fi MCP’s secure architecture.
 
 ---
 
 ## 🏗️ How to Run the Fi MCP Dev Server
 
+SmartFi integrates with the Fi MCP (Model Context Protocol) dev server, which simulates real-world financial data.
+
 ### Prerequisites
 - Go 1.23 or later
-<img width="1768" height="853" alt="image" src="https://github.com/user-attachments/assets/7810018a-6739-4451-be42-e3d13ba7cb49" />
 
 ### Steps
-```bash
-# Clone the fi-mcp-dev repository
-# (or use your own fork)
-git clone https://github.com/epiFi/fi-mcp-dev.git
-cd fi-mcp-dev
-
-go mod tidy
-FI_MCP_PORT=8080 go run .
-```
-The server will start on http://localhost:8080.
-<img width="1765" height="862" alt="image" src="https://github.com/user-attachments/assets/233fb4cb-d35d-446a-8324-20d93b57137e" />
+1.  Clone the `fi-mcp-dev` repository:
+    ```bash
+    # Clone the fi-mcp-dev repository
+    # (or use your own fork)
+    git clone [https://github.com/epiFi/fi-mcp-dev.git](https://github.com/epiFi/fi-mcp-dev.git)
+    cd fi-mcp-dev
+    ```
+2.  Install dependencies and run the server:
+    ```bash
+    go mod tidy
+    FI_MCP_PORT=8080 go run .
+    ```
+    The server will start on `http://localhost:8080`.
 
 ### Authentication Flow
 - When you call an API/tool, the server checks for a valid session.
-- If not authenticated, you’ll get a login_url in the response.
-- Open the login URL in your browser, enter any allowed phone number (see below), and any OTP/passcode.
+- If not authenticated, you’ll get a `login_url` in the response.
+- Open the login URL in your browser, enter an allowed phone number (see below), and any OTP/passcode.
 - On success, your session is active for the server run.
 
 #### Test Phone Numbers & Scenarios
 | Phone Number | Scenario Description |
-|--------------|---------------------|
-| 1111111111   | No assets connected. Only savings account balance present |
-| 2222222222   | All assets connected (Banks, EPF, Indian/US stocks, Credit report). Large MF portfolio |
-| 3333333333   | All assets connected. Small MF portfolio |
+|--------------|----------------------|
+| `1111111111` | No assets connected. Only savings account balance present. |
+| `2222222222` | All assets connected (Banks, EPF, Indian/US stocks, Credit report). Large MF portfolio. |
+| `3333333333` | All assets connected. Small MF portfolio. |
 | ...          | ... (see full list in fi-mcp-dev README) |
 
 ---
-<img width="1757" height="827" alt="image" src="https://github.com/user-attachments/assets/efcf6d03-13eb-44f8-8ca1-a0c94d7d59e5" />
+## 🧱 Architecture
+
+<p align="center">
+  <img src="./images/architecture.png" alt="SmartFi Architecture" width="80%" />
+</p>
+
+---
+
+## 🤖 Tech Stack
+
+### Core AI Stack
+- **Google Gemini** – Natural language understanding & insights
+- **Vertex AI / Agent Builder** – Tool orchestration for Gemini
+- **Google Cloud AI Studio** – Prompt and workflow design
+
+### Finance Data Integration
+- **Fi Money’s MCP Server** – Secure unified financial data from 18+ sources
+- **FI MCP API** – Gateway for SmartFi to access user portfolios
+
+### Web Development
+- **React.js / Next.js** – Responsive frontend
+- **Firebase** – Store goals and user data
+- **Railway** – Backend deployment
+- **Vercel** – Live web app hosting
+
+---
 
 ## 🔑 Available API Tools (Endpoints)
 
-### 1. fetch_net_worth
-- **Purpose**: Calculate comprehensive net worth using actual data from connected accounts
-- **Use Cases**: Portfolio analysis, net worth tracking, financial health, investment performance, debt-to-asset ratio
-- **Sample Response**:
-```json
-{
-  "netWorthResponse": {
-    "assetValues": [
-      {"netWorthAttribute": "ASSET_TYPE_MUTUAL_FUND", "value": {"currencyCode": "INR", "units": "84613"}},
-      {"netWorthAttribute": "ASSET_TYPE_EPF", "value": {"currencyCode": "INR", "units": "211111"}},
-      {"netWorthAttribute": "ASSET_TYPE_INDIAN_SECURITIES", "value": {"currencyCode": "INR", "units": "200642"}},
-      {"netWorthAttribute": "ASSET_TYPE_SAVINGS_ACCOUNTS", "value": {"currencyCode": "INR", "units": "436355"}}
-    ],
-    "liabilityValues": [
-      {"netWorthAttribute": "LIABILITY_TYPE_OTHER_LOAN", "value": {"currencyCode": "INR", "units": "42000"}},
-      {"netWorthAttribute": "LIABILITY_TYPE_HOME_LOAN", "value": {"currencyCode": "INR", "units": "17000"}},
-      {"netWorthAttribute": "LIABILITY_TYPE_VEHICLE_LOAN", "value": {"currencyCode": "INR", "units": "5000"}}
-    ],
-    "totalNetWorthValue": {"currencyCode": "INR", "units": "868721"}
-  }
-}
-```
-- **Error Handling**: Returns empty if no accounts connected. Prompts user to connect missing accounts.
+### 1. `fetch_net_worth`
+- **Purpose**: Calculate comprehensive net worth using actual data from connected accounts.
+- **Use Cases**: Portfolio analysis, net worth tracking, financial health, investment performance, debt-to-asset ratio.
 
-### 2. fetch_credit_report
-- **Purpose**: Retrieve comprehensive credit report information
-- **Sample Response**: (see full JSON in documentation)
-- **Error Handling**: Returns "No credit score data available" if not connected. Prompts user to connect credit profile.
+### 2. `fetch_credit_report`
+- **Purpose**: Retrieve comprehensive credit report information.
 
-### 3. fetch_epf_details
-- **Purpose**: Access Employee Provident Fund account information
-- **Sample Response**:
-```json
-{
-  "uanAccounts": [
-    {
-      "phoneNumber": {},
-      "rawDetails": {
-        "est_details": [
-          {"est_name": "KARZA TECHNOLOGIES PRIVATE LIMITED", "member_id": "MHBANXXXXXXXXXXXXXXXXX", "office": "(RO)BANDRA(MUMBAI-I)", "doj_epf": "24-03-2021", "doe_epf": "02-01-2022", "doe_eps": "02-01-2022", "pf_balance": {"net_balance": "200000", "employee_share": {"credit": "100000", "balance": "100000"}, "employer_share": {"credit": "100000", "balance": "100000"}}}
-        ],
-        "overall_pf_balance": {"pension_balance": "1000000", "current_pf_balance": "211111", "employee_share_total": {"credit": "1111", "balance": "11111"}}
-      }
-    }
-  ]
-}
-```
-- **Error Handling**: Directs users to link EPF account if not connected.
+### 3. `fetch_epf_details`
+- **Purpose**: Access Employee Provident Fund account information.
 
-### 4. fetch_mf_transactions
-- **Purpose**: Retrieve mutual funds transaction history for portfolio analysis
-- **Sample Response**:
-```json
-{
-  "transactions": [
-    {"isinNumber": "INF760K01FC4", "folioId": "55557777", "externalOrderType": "BUY", "transactionDate": "2022-12-31T18:30:00Z", "purchasePrice": {"currencyCode": "INR", "units": "66", "nanos": 554600000}, "transactionAmount": {"currencyCode": "INR", "units": "6655", "nanos": 460000000}, "transactionUnits": 100, "transactionMode": "N", "schemeName": "Canara Robeco Gilt Fund - Regular Plan"}
-  ]
-}
-```
-- **Error Handling**: Returns available data with clear indication of limitations.
+### 4. `fetch_mf_transactions`
+- **Purpose**: Retrieve mutual funds transaction history for portfolio analysis.
+
+*Error Handling*: Each endpoint provides clear guidance if the required accounts are not connected, prompting the user to link them.
 
 ---
 
@@ -127,10 +179,10 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-```
 
-### JavaScript Example
-```js
+JavaScript Example
+JavaScript
+
 async function getUserNetWorth() {
   const response = await fetch('/api/mcp', {
     method: 'POST',
@@ -140,51 +192,26 @@ async function getUserNetWorth() {
   const data = await response.json();
   // handle data
 }
-```
+Curl Example
+Bash
 
-### Curl Example
-```bash
-curl -X POST -H "Content-Type: application/json" -H "Mcp-Session-Id: mcp-session-xxxx" -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"fetch_net_worth","arguments":{}}}' http://localhost:8080/mcp/stream
-```
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "Mcp-Session-Id: mcp-session-xxxx" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"fetch_net_worth","arguments":{}}}' \
+  http://localhost:8080/mcp/stream
+🔮 Future Scope
+⚠ Real-time fraud detection
 
----
+🧠 Advanced predictive market insights
 
-## 💬 AI Chat Integration (Gemini API)
+🤖 Secure automated savings & payments
 
-- The AI chat is powered by Google Gemini API.
-- When a user asks a financial question (e.g., "What’s my net worth?"), the chat triggers a real MCP call, fetches the data, and summarizes it using Gemini.
-- If Gemini is unavailable, the chat falls back to local logic for common queries.
-- All chat UI is fully responsive and accessible.
+🗣 Voice Assistant integration (Google Assistant, Alexa)
 
-### Example Chat Flow
-1. User: "How much is my net worth?"
-2. Chat triggers `fetch_net_worth` via MCP, gets real data.
-3. Gemini API summarizes and responds: "Your total net worth is ₹8,68,721, with major assets in savings accounts and mutual funds."
+📱 Native mobile app & insurance/tax expansion
 
-#### Gemini API Setup
-- Already integrated in the codebase.
-- Set your API key in `.env` as `VITE_GEMINI_API_KEY`.
+📣 Call to Action
 
----
-
-## 📱 Responsive UI & Accessibility
-- All components are mobile-first, tablet-friendly, and desktop-rich.
-- Keyboard navigation, screen reader support, and color contrast are built-in.
-
----
-![Uploading image.png…]()
-
-## 🧑‍💻 Best Practices
-- Always check if required accounts are connected before displaying data.
-- Handle partial data gracefully.
-- Provide clear error messages and user guidance.
-- Never store or cache sensitive financial data.
-- Use Gemini API for all AI/analytics features (no Vertex API).
-
----
-
-## 🖼️ Screenshots & Sample Conversations
-*(Add screenshots here if available)*
-
----
+We're building the future of intelligent personal finance. Be a part of it!
 
